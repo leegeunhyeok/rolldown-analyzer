@@ -1,3 +1,3 @@
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
-export const frontendPublicPath = fileURLToPath(new URL('./public', import.meta.dirname));
+export const frontendPublicPath = path.join(import.meta.dirname, 'public');
