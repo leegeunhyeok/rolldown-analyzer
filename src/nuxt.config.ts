@@ -30,13 +30,6 @@ export default defineNuxtConfig({
         lang: 'en',
         class: 'bg-dots',
       },
-      script: [
-        {
-          type: 'text/javascript',
-          src: 'rolldown-data.js',
-          defer: true,
-        },
-      ],
     },
   },
   debug: false,

@@ -2,7 +2,6 @@ import type { SessionMeta } from '@rolldown/debug';
 import { computed, shallowRef } from 'vue';
 
 import type {
-  ModuleBuildMetrics,
   ModuleInfo,
   ModuleListItem,
   PackageInfo,
@@ -39,13 +38,33 @@ declare global {
 const _data = shallowRef<RolldownData | null>(
   typeof window !== 'undefined' ? ((window as any).__data ?? null) : null,
 );
+
 const _loading = shallowRef(false);
+let _initPromise: Promise<void> | null = null;
+
+async function initData() {
+  if (_data.value || _loading.value) return;
+
+  _loading.value = true;
+  try {
+    const res = await fetch('/rolldown-data.json');
+    if (res.ok) {
+      const json = await res.json();
+      _data.value = json;
+      if (typeof window !== 'undefined') (window as any).__data = json;
+    }
+  } catch {
+    // noop
+  } finally {
+    _loading.value = false;
+  }
+}
 
 export function useData() {
   const data = _data;
 
-  if (data == null) {
-    throw new Error('No data available');
+  if (!data.value && !_initPromise) {
+    _initPromise = initData();
   }
 
   const session = computed<SessionContext | null>(() => {
