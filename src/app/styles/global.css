@@ -1,0 +1,120 @@
+html,
+body,
+#__nuxt {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.bg-dots {
+  background-image: url('/dot-grid-light.png');
+  background-size: 50px;
+  background-repeat: repeat;
+}
+
+.dark .bg-dots,
+.bg-dots.dark {
+  color-scheme: dark;
+  background-color: black;
+  background-image: url('/dot-grid-dark.png');
+}
+
+html {
+  --uno: bg-base font-sans;
+}
+body {
+  --uno: color-base;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Animations */
+@keyframes spin-reverse {
+  from {
+    transform: rotate(1080deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.animate-spin-reverse,
+.hover\:animate-spin-reverse:hover {
+  animation: spin-reverse 2.5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+/* Xterm */
+.terminal.xterm {
+  height: 100%;
+  padding: 0 1.5em;
+}
+
+.terminal.xterm .xterm-rows {
+  --uno: font-mono;
+}
+
+/* Overrides Floating Vue */
+.v-popper--theme-dropdown .v-popper__inner,
+.v-popper--theme-tooltip .v-popper__inner {
+  --uno: bg-tooltip color-base font-sans rounded border border-base shadow dark: shadow-2xl;
+  box-shadow: 0 6px 30px #0000001a;
+}
+
+.v-popper--theme-tooltip .v-popper__inner {
+  --uno: text-sm;
+}
+
+.v-popper--theme-dropdown .v-popper__inner {
+  max-width: 50vw;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-inner,
+.v-popper--theme-dropdown .v-popper__arrow-inner {
+  visibility: visible;
+  --uno: border-solid border-white dark: border-#111;
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-outer,
+.v-popper--theme-dropdown .v-popper__arrow-outer {
+  --uno: border-solid border-base;
+}
+
+.v-popper--theme-tooltip.v-popper--shown,
+.v-popper--theme-tooltip.v-popper--shown * {
+  transition: none !important;
+}
+
+.v-popper__popper--shown {
+  overflow: visible !important;
+}
+
+/* For Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8884;
+  transition: background 0.2s ease;
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8885;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 1px;
+  background: transparent;
+}
