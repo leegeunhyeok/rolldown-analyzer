@@ -26,6 +26,8 @@ export interface ClientSettings {
   pluginDetailsShowType: 'changed' | 'unchanged' | 'all';
   packageViewType: 'table' | 'treemap' | 'duplicate-packages';
   packageSizeSortType: string;
+  analyzeViewType: 'treemap' | 'sunburst' | 'flamegraph';
+  analyzeSelectedChunk: number | null;
 }
 
 export const settings = useLocalStorage<ClientSettings>(
@@ -53,6 +55,8 @@ export const settings = useLocalStorage<ClientSettings>(
     pluginDetailsShowType: 'all',
     packageViewType: 'table',
     packageSizeSortType: '',
+    analyzeViewType: 'treemap',
+    analyzeSelectedChunk: null,
   },
   {
     mergeDefaults: true,

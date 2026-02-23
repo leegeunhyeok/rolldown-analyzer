@@ -37,3 +37,6 @@ export type PluginChartInfo = Omit<PluginBuildInfo, 'type' | 'plugin_id' | 'plug
 };
 
 export type PluginChartNode = TreeNode<PluginChartInfo | undefined>;
+
+export type AnalyzeChartInfo = { id: string; filename: string; path: string; size: number; type: 'folder' | 'module' };
+export type AnalyzeChartNode = TreeNode<AnalyzeChartInfo | undefined>;

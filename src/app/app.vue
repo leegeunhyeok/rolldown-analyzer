@@ -50,6 +50,12 @@ useSideNav(() => {
       icon: 'i-ph-house-duotone',
     },
     {
+      title: 'Analyze',
+      to: `/analyze`,
+      icon: 'i-ph-chart-pie-slice-duotone',
+      category: 'session',
+    },
+    {
       title: 'Modules Graph',
       to: `/graph`,
       icon: 'i-ph-graph-duotone',
