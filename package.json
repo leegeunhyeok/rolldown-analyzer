@@ -27,7 +27,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "generate-data": "LOGS_PATH=.data/logs.json META_PATH=.data/meta.json node --import @oxc-node/core/register generate.ts",
+    "prepack": "yarn build",
     "build": "yarn dev:prepare && ROLLDOWN_OPTIONS_VALIDATION=loose nuxi build src && tsdown",
     "build:debug": "NUXT_DEBUG_BUILD=true yarn run build",
     "dev": "DEBUG='vite:devtools:*' ROLLDOWN_OPTIONS_VALIDATION=loose nuxi dev src",
@@ -38,7 +38,8 @@
     "lint": "oxlint --type-aware --deny-warnings",
     "lint:fix": "oxlint --type-aware --deny-warnings --fix",
     "typecheck": "tsc --noEmit",
-    "prepack": "yarn build"
+    "deploy:preview": "yarn generate-data && yarn build && mv rolldown-data.json dist/public/rolldown-data.json",
+    "generate-data": "LOGS_PATH=.data/logs.json META_PATH=.data/meta.json tsx generate.ts"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.5",
@@ -67,7 +68,6 @@
     "@iconify-json/simple-icons": "^1.2.71",
     "@iconify-json/svg-spinners": "^1.2.4",
     "@iconify-json/tabler": "^1.2.26",
-    "@oxc-node/core": "^0.0.35",
     "@types/codemirror": "^5.60.17",
     "@types/d3-hierarchy": "^3.1.7",
     "@types/d3-shape": "^3.1.8",
@@ -96,6 +96,7 @@
     "oxlint-tsgolint": "^0.14.2",
     "splitpanes": "^4.0.4",
     "tsdown": "^0.20.3",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite": "8.0.0-beta.15"
   },

@@ -9,15 +9,17 @@ if (fs.existsSync(dataPath)) {
   process.exit(0);
 }
 
-if (!process.env.LOGS_PATH || !process.env.META_PATH) {
-  throw new Error('LOGS_PATH and META_PATH are required');
-}
+(async function main() {
+  if (!process.env.LOGS_PATH || !process.env.META_PATH) {
+    throw new Error('LOGS_PATH and META_PATH are required');
+  }
 
-const data = await generateData({
-  logsPath: process.env.LOGS_PATH,
-  metaPath: process.env.META_PATH,
-});
+  const data = await generateData({
+    logsPath: process.env.LOGS_PATH,
+    metaPath: process.env.META_PATH,
+  });
 
-fs.writeFileSync(dataPath, JSON.stringify(data));
+  fs.writeFileSync(dataPath, JSON.stringify(data));
 
-console.log('Data generated successfully');
+  console.log('Data generated successfully');
+})();
