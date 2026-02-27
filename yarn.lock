@@ -4160,6 +4160,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^14.0.3":
+  version: 14.0.3
+  resolution: "commander@npm:14.0.3"
+  checksum: 10c0/755652564bbf56ff2ff083313912b326450d3f8d8c85f4b71416539c9a05c3c67dbd206821ca72635bf6b160e2afdefcb458e86b317827d5cb333b69ce7f1a24
+  languageName: node
+  linkType: hard
+
 "commander@npm:^2.20.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
@@ -8189,6 +8196,7 @@ __metadata:
     codemirror: "npm:^5.65.21"
     codemirror-theme-vars: "npm:^0.1.2"
     comlink: "npm:^4.4.2"
+    commander: "npm:^14.0.3"
     d3: "npm:^7.9.0"
     d3-hierarchy: "npm:^3.1.2"
     d3-shape: "npm:^3.2.0"

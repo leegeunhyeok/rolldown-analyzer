@@ -72,6 +72,26 @@ This copies the built frontend files and a generated `rolldown-data.json` into t
 npx serve ./report
 ```
 
+### CLI
+
+You can also use the analyzer from the command line:
+
+```bash
+# Generate a standalone analysis page
+npx rolldown-analyzer generate \
+  --logs node_modules/.rolldown/<session_id>/logs.json \
+  --meta node_modules/.rolldown/<session_id>/meta.json \
+  -o ./report
+
+# Generate only the JSON data
+npx rolldown-analyzer generate-data \
+  --logs node_modules/.rolldown/<session_id>/logs.json \
+  --meta node_modules/.rolldown/<session_id>/meta.json \
+  -o ./data.json
+```
+
+### `generateData`
+
 If you only need the raw data without the frontend, use `generateData` instead:
 
 ```ts
