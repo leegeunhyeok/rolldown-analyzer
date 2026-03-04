@@ -17,12 +17,12 @@
     "build": "yarn build:app && yarn build:lite && yarn build:node",
     "start:app": "nuxi preview packages/app",
     "start:lite": "nuxi preview packages/lite",
-    "prepack": "yarn build",
     "typecheck": "vue-tsc --noEmit -p packages/app/.nuxt/tsconfig.app.json",
     "lint": "oxlint --type-aware --deny-warnings",
     "lint:fix": "oxlint --type-aware --deny-warnings --fix",
     "fmt": "oxfmt --check",
-    "fmt:fix": "oxfmt"
+    "fmt:fix": "oxfmt",
+    "publish": "yarn build && yarn workspace rolldown-analyzer npm publish"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.5",
