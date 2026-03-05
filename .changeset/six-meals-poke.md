@@ -1,5 +1,0 @@
----
-"rolldown-analyzer": minor
----
-
-release
