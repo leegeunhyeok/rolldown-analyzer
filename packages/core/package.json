@@ -15,6 +15,8 @@
     "./ui/utils/color": "./ui/utils/color.ts",
     "./ui/utils/format": "./ui/utils/format.ts",
     "./ui/unocss": "./ui/unocss/index.ts",
+    "./ui/unocss/shared-shortcuts": "./ui/unocss/shared-shortcuts.ts",
+    "./ui/styles/global.css": "./ui/styles/global.css",
     "./ui/components/*": "./ui/components/*"
   }
 }

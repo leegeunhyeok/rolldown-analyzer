@@ -1,1 +1,1 @@
-export * from './unocss';
+export * from './unocss'

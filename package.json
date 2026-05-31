@@ -42,7 +42,7 @@
     "unocss": "^66.6.0",
     "vue": "^3.5.28",
     "vue-router": "^5.0.3",
-    "vue-virtual-scroller": "^2.0.0-beta.8"
+    "vue-virtual-scroller": "^3.0.0"
   },
   "devDependencies": {
     "@antfu/utils": "^9.3.0",
@@ -65,6 +65,7 @@
     "@types/diff": "^8.0.0",
     "@types/node": "^22",
     "@unocss/nuxt": "^66.6.0",
+    "@unocss/preset-web-fonts": "66.6.0",
     "@unocss/preset-wind4": "^66.6.0",
     "@vue/tsconfig": "^0.8.1",
     "@vueuse/components": "^14.2.1",

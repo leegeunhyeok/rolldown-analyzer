@@ -1,4 +1,4 @@
-import type { Theme } from '@unocss/preset-wind4';
+import type { Theme } from '@unocss/preset-wind4'
 
 export const theme: Theme = {
   colors: {
@@ -17,4 +17,4 @@ export const theme: Theme = {
       950: '#4d006e',
     },
   },
-};
+}

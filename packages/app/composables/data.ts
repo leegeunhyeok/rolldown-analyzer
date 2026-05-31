@@ -1,4 +1,3 @@
-import type { SessionMeta } from '@rolldown/debug';
 import { computed, shallowRef } from 'vue';
 
 import type {
