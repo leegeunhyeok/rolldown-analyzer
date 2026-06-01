@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { formatTimeAgo } from '@vueuse/core';
+import { formatTimeAgo } from '@vueuse/core'
 
 const props = defineProps<{
-  timestamp: number | string;
-}>();
+  timestamp: number | string
+}>()
 </script>
 
 <template>
