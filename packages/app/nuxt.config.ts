@@ -12,6 +12,7 @@ if (!fs.existsSync(path.resolve(import.meta.dirname, '..', '..', 'rolldown-data.
 
 export default defineNuxtConfig({
   ssr: false,
+  srcDir: '.',
   modules: ['@vueuse/nuxt', '@unocss/nuxt'],
   experimental: {
     typedPages: true,
@@ -24,6 +25,9 @@ export default defineNuxtConfig({
     preset: 'static',
     output: {
       dir: '../rolldown-analyzer/dist/app',
+    },
+    prerender: {
+      routes: ['/rolldown-data.json'],
     },
     sourceMap: false,
   },
