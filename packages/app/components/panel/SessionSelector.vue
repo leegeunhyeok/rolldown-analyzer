@@ -29,8 +29,16 @@ function checkIsDifferentEntry(session: BuildInfo) {
   return selectedSessionEntry.value && selectedSessionEntry.value !== parseEntryPath(session);
 }
 
+function checkIsSelectionLimitReached(session: BuildInfo) {
+  return props.selectedSessions.length === 2 && !props.selectedSessionIds.includes(session.id);
+}
+
+function checkIsSelectable(session: BuildInfo) {
+  return !checkIsDifferentEntry(session) && !checkIsSelectionLimitReached(session);
+}
+
 function select(session: BuildInfo) {
-  if (props.sessionMode === 'compare' && !checkIsDifferentEntry(session)) {
+  if (props.sessionMode === 'compare' && checkIsSelectable(session)) {
     emit('select', session);
   }
 }
@@ -45,13 +53,12 @@ function select(session: BuildInfo) {
         border="~ rounded-md"
         :class="
           sessionMode === 'list'
-            ? ['hover:bg-active', 'border-base']
+            ? ['hover:bg-active', 'border-base', 'cursor-pointer']
             : [
                 selectedSessionIds.includes(session.id) ? 'border-active' : 'border-base',
-                checkIsDifferentEntry(session) ||
-                (selectedSessions.length === 2 && !selectedSessionIds.includes(session.id))
-                  ? 'op50'
-                  : 'hover:bg-active',
+                checkIsSelectable(session)
+                  ? 'hover:bg-active cursor-pointer'
+                  : 'op50 cursor-not-allowed',
               ]
         "
         flex="~ col gap-1"
