@@ -3,7 +3,7 @@
  * https://github.com/vitejs/devtools/tree/v0.0.0-alpha.32/packages/rolldown/src/node/rolldown
  */
 
-import fs from 'node:fs';
+import fs, { type PathLike } from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
 
@@ -56,8 +56,8 @@ function computeDiffCounts(from, to) {
 }
 
 export interface GenerateDataOptions {
-  logsPath: string;
-  metaPath: string;
+  logsPath: PathLike;
+  metaPath: PathLike;
 }
 
 export async function generateData(options: GenerateDataOptions) {
