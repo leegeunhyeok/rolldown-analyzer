@@ -18,5 +18,5 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div ref="el" />
+  <div ref="el" class="px4" />
 </template>
