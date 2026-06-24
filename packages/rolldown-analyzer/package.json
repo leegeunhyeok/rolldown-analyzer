@@ -1,6 +1,6 @@
 {
   "name": "rolldown-analyzer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Standalone Analyzer for Rolldown",
   "keywords": [
     "analyzer",
