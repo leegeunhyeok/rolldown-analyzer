@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { ClientSettings } from '../../../app/state/settings';
-import type { RolldownPluginBuildMetrics, SessionContext } from '@rolldown-analyzer/core/types/data';
+import type {
+  RolldownPluginBuildMetrics,
+  SessionContext,
+} from '@rolldown-analyzer/core/types/data';
 import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDuration.vue';
 import DisplayNumberBadge from '@rolldown-analyzer/core/ui/components/DisplayNumberBadge.vue';
 import { useCycleList, useToggle } from '@vueuse/core';

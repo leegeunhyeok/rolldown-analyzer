@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { RolldownAssetInfo, RolldownChunkInfo, SessionContext } from '@rolldown-analyzer/core/types';
+import type {
+  RolldownAssetInfo,
+  RolldownChunkInfo,
+  SessionContext,
+} from '@rolldown-analyzer/core/types';
 import { useRoute } from '#app/composables/router';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';

@@ -1,5 +1,5 @@
-import type { WebFontsOptions } from '@unocss/preset-web-fonts'
-import type { Theme } from '@unocss/preset-wind4'
+import type { WebFontsOptions } from '@unocss/preset-web-fonts';
+import type { Theme } from '@unocss/preset-wind4';
 import {
   definePreset,
   mergeDeep,
@@ -10,13 +10,14 @@ import {
   presetWind4,
   transformerDirectives,
   transformerVariantGroup,
-} from 'unocss'
-import { shortcuts } from './shortcuts'
-import { theme as devtoolsDefaultTheme } from './theme'
+} from 'unocss';
+
+import { shortcuts } from './shortcuts';
+import { theme as devtoolsDefaultTheme } from './theme';
 
 export interface PresetDevToolsUIOptions {
-  webFonts?: WebFontsOptions
-  theme?: Theme
+  webFonts?: WebFontsOptions;
+  theme?: Theme;
 }
 
 export const presetDevToolsUI = definePreset<PresetDevToolsUIOptions, Theme>((options) => {
@@ -24,7 +25,7 @@ export const presetDevToolsUI = definePreset<PresetDevToolsUIOptions, Theme>((op
     name: '@rolldown-analyzer/core/ui/preset',
     shortcuts,
     extendTheme(defaultTheme) {
-      return mergeDeep(defaultTheme, options?.theme ?? devtoolsDefaultTheme)
+      return mergeDeep(defaultTheme, options?.theme ?? devtoolsDefaultTheme);
     },
     presets: [
       presetWind4(),
@@ -33,19 +34,18 @@ export const presetDevToolsUI = definePreset<PresetDevToolsUIOptions, Theme>((op
         scale: 1.2,
       }),
       presetTypography(),
-      presetWebFonts(mergeDeep(
-        {
-          fonts: {
-            sans: 'DM Sans:200,400,700',
-            mono: 'DM Mono',
+      presetWebFonts(
+        mergeDeep(
+          {
+            fonts: {
+              sans: 'DM Sans:200,400,700',
+              mono: 'DM Mono',
+            },
           },
-        },
-        options?.webFonts ?? {},
-      )),
+          options?.webFonts ?? {},
+        ),
+      ),
     ],
-    transformers: [
-      transformerDirectives(),
-      transformerVariantGroup(),
-    ],
-  }
-})
+    transformers: [transformerDirectives(), transformerVariantGroup()],
+  };
+});

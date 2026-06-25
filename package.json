@@ -1,11 +1,11 @@
 {
   "name": "rolldown-analyzer-root",
   "private": true,
-  "type": "module",
   "workspaces": [
     "packages/*",
     "pages"
   ],
+  "type": "module",
   "scripts": {
     "prepare:app": "yarn generate-data && nuxi prepare packages/app",
     "prepare:lite": "nuxi prepare packages/lite",

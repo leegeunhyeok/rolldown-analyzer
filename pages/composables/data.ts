@@ -1,5 +1,3 @@
-import { computed, shallowRef } from 'vue';
-
 import type {
   ModuleListItem,
   PackageInfo,
@@ -10,6 +8,8 @@ import type {
 } from '@rolldown-analyzer/core/types';
 import { convertAnalyzeData } from '@rolldown-analyzer/core/utils/convert-analyze-data';
 import type { AnalyzeData } from '@rolldown-analyzer/core/utils/convert-analyze-data';
+import { computed, shallowRef } from 'vue';
+
 import { getFileTypeFromName } from '../../packages/app/utils/icon';
 
 const _data = shallowRef<RolldownData | null>(null);

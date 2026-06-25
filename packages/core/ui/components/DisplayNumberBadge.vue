@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 const props = withDefaults(
   defineProps<{
-    number: number | string
-    color?: string
-    icon?: string
-    prefix?: string
-    suffix?: string
-    format?: 'locale' | 'percent'
+    number: number | string;
+    color?: string;
+    icon?: string;
+    prefix?: string;
+    suffix?: string;
+    format?: 'locale' | 'percent';
   }>(),
   {
     color: 'badge-color-gray op75',
     format: 'locale',
   },
-)
+);
 
 const formatted = computed(() => {
   if (props.format === 'percent') {
@@ -22,10 +22,10 @@ const formatted = computed(() => {
       style: 'percent',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    })
+    });
   }
-  return Number(props.number).toLocaleString()
-})
+  return Number(props.number).toLocaleString();
+});
 </script>
 
 <template>

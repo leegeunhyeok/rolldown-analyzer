@@ -1,6 +1,7 @@
-import type { UserShortcuts } from '@unocss/core'
-import type { Theme } from '@unocss/preset-wind4'
-import { sharedShortcuts } from './shared-shortcuts'
+import type { UserShortcuts } from '@unocss/core';
+import type { Theme } from '@unocss/preset-wind4';
+
+import { sharedShortcuts } from './shared-shortcuts';
 
 export const shortcuts: UserShortcuts<Theme> = [
   ...sharedShortcuts,
@@ -16,13 +17,16 @@ export const shortcuts: UserShortcuts<Theme> = [
     'bg-tooltip': 'bg-white:75 dark:bg-#111:75 backdrop-blur-8',
     'bg-code': 'bg-gray-500:5',
 
-    'bg-gradient-more': 'bg-gradient-to-t from-white via-white:80 to-white:0 dark:from-#111 dark:via-#111:80 dark:to-#111:0',
+    'bg-gradient-more':
+      'bg-gradient-to-t from-white via-white:80 to-white:0 dark:from-#111 dark:via-#111:80 dark:to-#111:0',
 
-    'btn-action': 'border border-base rounded flex gap-2 items-center px2 py1 op75 hover:op100 hover:bg-active disabled:pointer-events-none disabled:op30!',
+    'btn-action':
+      'border border-base rounded flex gap-2 items-center px2 py1 op75 hover:op100 hover:bg-active disabled:pointer-events-none disabled:op30!',
     'btn-action-sm': 'btn-action text-sm',
     'btn-action-active': 'color-active border-active! bg-active op100!',
 
-    'icon-catppuccin': 'light:filter-invert-100 light:filter-hue-rotate-180 light:filter-brightness-80',
+    'icon-catppuccin':
+      'light:filter-invert-100 light:filter-hue-rotate-180 light:filter-brightness-80',
 
     'z-flowmap-line': 'z--1',
     'z-graph-bg': 'z-5',
@@ -50,5 +54,9 @@ export const shortcuts: UserShortcuts<Theme> = [
     'page-padding': 'pt-24 pl-112 pr-8 pb-8',
     'page-padding-collapsed': 'pt-24 pl-14 pr-8 pb-8',
   },
-  [/^badge-color-(\w+)$/, ([, color]) => `bg-${color}-400:20 dark:bg-${color}-400:10 text-${color}-700 dark:text-${color}-300 border-${color}-600:10 dark:border-${color}-300:10`],
-]
+  [
+    /^badge-color-(\w+)$/,
+    ([, color]) =>
+      `bg-${color}-400:20 dark:bg-${color}-400:10 text-${color}-700 dark:text-${color}-300 border-${color}-600:10 dark:border-${color}-300:10`,
+  ],
+];

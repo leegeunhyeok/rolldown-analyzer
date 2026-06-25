@@ -43,9 +43,7 @@ export default defineNuxtConfig({
       '../packages/core/ui/composables',
       '../packages/core/ui/utils',
     ],
-    imports: [
-      { from: '../packages/app/composables/chart', name: 'useChartGraph' },
-    ],
+    imports: [{ from: '../packages/app/composables/chart', name: 'useChartGraph' }],
   },
   vite: {
     optimizeDeps: {

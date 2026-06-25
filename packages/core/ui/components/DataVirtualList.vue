@@ -1,40 +1,40 @@
 <script setup lang="ts" generic="T">
-import { DynamicScroller, DynamicScrollerItem, RecycleScroller, WindowScroller } from 'vue-virtual-scroller'
-import 'vue-virtual-scroller/index.css'
+import {
+  DynamicScroller,
+  DynamicScrollerItem,
+  RecycleScroller,
+  WindowScroller,
+} from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/index.css';
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 
-const props = withDefaults(defineProps<{
-  items: T[]
-  keyProp: keyof T & string
-  pageMode?: boolean
-  minItemSize?: number
-  itemSize?: number
-  scroller?: 'dynamic' | 'fixed' | 'window'
-}>(), {
-  pageMode: true,
-  minItemSize: 30,
-  scroller: 'dynamic',
-})
+const props = withDefaults(
+  defineProps<{
+    items: T[];
+    keyProp: keyof T & string;
+    pageMode?: boolean;
+    minItemSize?: number;
+    itemSize?: number;
+    scroller?: 'dynamic' | 'fixed' | 'window';
+  }>(),
+  {
+    pageMode: true,
+    minItemSize: 30,
+    scroller: 'dynamic',
+  },
+);
 
 defineSlots<{
-  before?: () => void
-  default: (props: {
-    item: T
-    index: number
-    active?: boolean
-  }) => void
-}>()
+  before?: () => void;
+  default: (props: { item: T; index: number; active?: boolean }) => void;
+}>();
 </script>
 
 <template>
-  <div
-    v-if="props.scroller === 'window'"
-    v-bind="$attrs"
-    class="data-virtual-list-window"
-  >
+  <div v-if="props.scroller === 'window'" v-bind="$attrs" class="data-virtual-list-window">
     <WindowScroller
       class="data-virtual-list-window__scroller"
       list-class="data-virtual-list-window__list"
@@ -51,7 +51,7 @@ defineSlots<{
       <template #default="{ item, active, index }">
         <slot
           v-bind="{ key: (item as T)[props.keyProp] }"
-          :item="(item as T)"
+          :item="item as T"
           :index="index"
           :active="active"
         />
@@ -70,14 +70,10 @@ defineSlots<{
       <slot name="before" />
     </template>
     <template #default="{ item, active, index }">
-      <DynamicScrollerItem
-        :item="(item as T)"
-        :active="active"
-        :index="index"
-      >
+      <DynamicScrollerItem :item="item as T" :active="active" :index="index">
         <slot
           v-bind="{ key: (item as T)[props.keyProp] }"
-          :item="(item as T)"
+          :item="item as T"
           :index="index"
           :active="active"
         />
@@ -98,7 +94,7 @@ defineSlots<{
     <template #default="{ item, active, index }">
       <slot
         v-bind="{ key: (item as T)[props.keyProp] }"
-        :item="(item as T)"
+        :item="item as T"
         :index="index"
         :active="active"
       />

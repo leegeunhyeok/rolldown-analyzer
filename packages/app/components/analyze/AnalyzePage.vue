@@ -207,12 +207,14 @@ const selectedModules = computed<ModuleListItem[]>(() => {
     const module = moduleItemsMap.value.get(moduleId);
     if (!module) return [];
 
-    return [{
-      ...module,
-      path: toRelativePath(module.id),
-      imports: module.imports.filter((imp) => selectedIds.has(imp.module_id)),
-      importers: module.importers.filter((importerId) => selectedIds.has(importerId)),
-    }];
+    return [
+      {
+        ...module,
+        path: toRelativePath(module.id),
+        imports: module.imports.filter((imp) => selectedIds.has(imp.module_id)),
+        importers: module.importers.filter((importerId) => selectedIds.has(importerId)),
+      },
+    ];
   });
 });
 
@@ -324,7 +326,10 @@ const importerChain = computed(() => {
 
   // BFS to find shortest path to entry (or root)
   const queue: Array<{ id: string; path: Array<{ id: string; displayPath: string }> }> = [
-    { id: selectedModuleId.value, path: [{ id: selectedModuleId.value, displayPath: toDisplayPath(selectedModuleId.value) }] },
+    {
+      id: selectedModuleId.value,
+      path: [{ id: selectedModuleId.value, displayPath: toDisplayPath(selectedModuleId.value) }],
+    },
   ];
   visited.add(selectedModuleId.value);
 
@@ -364,35 +369,48 @@ function selectFolderModule(node: ModuleDest) {
   selectedModuleId.value = node.full;
 }
 
-const { tree, chartOptions, graph, nodeHover, nodeSelected, selectedNode, selectNode: _selectNode, buildGraph } =
-  useChartGraph<{ id: string; filename: string; size: number }, AnalyzeChartInfo, AnalyzeChartNode>({
-    data: searched,
-    nameKey: 'filename',
-    sizeKey: 'size',
-    rootText: selectedChunk.value ? guessChunkName(selectedChunk.value) : 'Modules',
-    nodeType: 'module',
-    graphOptions: {
-      onClick(node) {
-        if (node) nodeHover.value = node;
-        if (node.meta?.type === 'module') {
-          selectedNode.value = node.meta;
-          selectedModuleId.value = node.meta.id;
-        }
-      },
-      onHover(node) {
-        if (node) nodeHover.value = node;
-        if (node === null) nodeHover.value = undefined;
-      },
-      onLeave() {
-        nodeHover.value = undefined;
-      },
-      onSelect(node) {
-        nodeSelected.value = node || tree.value.root;
-        selectedNode.value = node?.meta;
-      },
+const {
+  tree,
+  chartOptions,
+  graph,
+  nodeHover,
+  nodeSelected,
+  selectedNode,
+  selectNode: _selectNode,
+  buildGraph,
+} = useChartGraph<
+  { id: string; filename: string; size: number },
+  AnalyzeChartInfo,
+  AnalyzeChartNode
+>({
+  data: searched,
+  nameKey: 'filename',
+  sizeKey: 'size',
+  rootText: selectedChunk.value ? guessChunkName(selectedChunk.value) : 'Modules',
+  nodeType: 'module',
+  graphOptions: {
+    onClick(node) {
+      if (node) nodeHover.value = node;
+      if (node.meta?.type === 'module') {
+        selectedNode.value = node.meta;
+        selectedModuleId.value = node.meta.id;
+      }
     },
-    onUpdate() {
-      const formatGetColor = colorMode.value === 'format'
+    onHover(node) {
+      if (node) nodeHover.value = node;
+      if (node === null) nodeHover.value = undefined;
+    },
+    onLeave() {
+      nodeHover.value = undefined;
+    },
+    onSelect(node) {
+      nodeSelected.value = node || tree.value.root;
+      selectedNode.value = node?.meta;
+    },
+  },
+  onUpdate() {
+    const formatGetColor =
+      colorMode.value === 'format'
         ? (node: any) => {
             const palette = isDark.value ? 'dark' : 'light';
             if (node.meta?.type === 'module') {
@@ -403,7 +421,8 @@ const { tree, chartOptions, graph, nodeHover, nodeSelected, selectedNode, select
             return FORMAT_COLORS[fmt][palette];
           }
         : undefined;
-      const formatGetSubtext = colorMode.value === 'format'
+    const formatGetSubtext =
+      colorMode.value === 'format'
         ? (node: any) => {
             if (node.meta?.type === 'module') {
               return getModuleFormat(node.meta.id).toUpperCase();
@@ -411,26 +430,26 @@ const { tree, chartOptions, graph, nodeHover, nodeSelected, selectedNode, select
             return getDominantFormat(node).toUpperCase();
           }
         : undefined;
-      const opts = formatGetColor
-        ? { ...chartOptions.value, getColor: formatGetColor, getSubtext: formatGetSubtext }
-        : chartOptions.value;
+    const opts = formatGetColor
+      ? { ...chartOptions.value, getColor: formatGetColor, getSubtext: formatGetSubtext }
+      : chartOptions.value;
 
-      switch (settings.value.analyzeViewType) {
-        case 'sunburst':
-          graph.value = new Sunburst(tree.value.root, opts);
-          break;
-        case 'treemap':
-          graph.value = new Treemap(tree.value.root, {
-            ...opts,
-            selectedPaddingRatio: 0,
-          });
-          break;
-        case 'flamegraph':
-          graph.value = new Flamegraph(tree.value.root, opts);
-          break;
-      }
-    },
-  });
+    switch (settings.value.analyzeViewType) {
+      case 'sunburst':
+        graph.value = new Sunburst(tree.value.root, opts);
+        break;
+      case 'treemap':
+        graph.value = new Treemap(tree.value.root, {
+          ...opts,
+          selectedPaddingRatio: 0,
+        });
+        break;
+      case 'flamegraph':
+        graph.value = new Flamegraph(tree.value.root, opts);
+        break;
+    }
+  },
+});
 
 function selectNode(node: AnalyzeChartNode | null, animate?: boolean) {
   if (node?.meta?.type === 'module') {
@@ -497,7 +516,12 @@ watch(colorMode, () => {
           </DataPathSelector>
         </template>
         <template #search-end>
-          <div v-if="standalone && settings.analyzeViewType === 'graph'" h10 mr2 flex="~ items-center">
+          <div
+            v-if="standalone && settings.analyzeViewType === 'graph'"
+            h10
+            mr2
+            flex="~ items-center"
+          >
             <button
               w-8
               h-8
@@ -584,12 +608,7 @@ watch(colorMode, () => {
       pb4
     >
       <template v-if="settings.analyzeViewType === 'treemap'">
-        <ChartTreemap
-          v-if="graph"
-          :graph="graph"
-          :selected="nodeSelected"
-          @select="selectNode"
-        >
+        <ChartTreemap v-if="graph" :graph="graph" :selected="nodeSelected" @select="selectNode">
           <template #default="{ selected, options, onSelect }">
             <ChartNavBreadcrumb
               border="b base"
@@ -644,14 +663,19 @@ watch(colorMode, () => {
       >
         <div flex="~ gap-2 items-center">
           <i i-ph-file-duotone flex-none />
-          <span truncate>{{ nodeHover.meta?.id ? toDisplayPath(nodeHover.meta.id) : nodeHover.id }}</span>
+          <span truncate>{{
+            nodeHover.meta?.id ? toDisplayPath(nodeHover.meta.id) : nodeHover.id
+          }}</span>
         </div>
         <template v-if="colorMode === 'size'">
           <div flex="~ gap-2 items-center">
             <span op50 text-xs>Size:</span>
             <DisplayFileSizeBadge :bytes="nodeHover.size" text-xs />
           </div>
-          <div v-if="nodeHover.meta.type === 'folder' && nodeHover.children.length > 0" flex="~ gap-2 items-center">
+          <div
+            v-if="nodeHover.meta.type === 'folder' && nodeHover.children.length > 0"
+            flex="~ gap-2 items-center"
+          >
             <span op50 text-xs>Children:</span>
             <span text-xs>{{ nodeHover.children.length }}</span>
           </div>
@@ -660,12 +684,18 @@ watch(colorMode, () => {
           <div flex="~ gap-2 items-center">
             <span op50 text-xs>Format:</span>
             <span
-              text-xs px1 rounded
+              text-xs
+              px1
+              rounded
               :class="{
-                'bg-yellow-500/20 text-yellow-600 dark:text-yellow-400': getModuleFormat(nodeHover.meta.id) === 'esm',
-                'bg-sky-400/20 text-sky-600 dark:text-sky-400': getModuleFormat(nodeHover.meta.id) === 'cjs',
-                'bg-violet-500/20 text-violet-600 dark:text-violet-400': getModuleFormat(nodeHover.meta.id) === 'mixed',
-                'bg-neutral-400/20 text-neutral-500': getModuleFormat(nodeHover.meta.id) === 'unknown',
+                'bg-yellow-500/20 text-yellow-600 dark:text-yellow-400':
+                  getModuleFormat(nodeHover.meta.id) === 'esm',
+                'bg-sky-400/20 text-sky-600 dark:text-sky-400':
+                  getModuleFormat(nodeHover.meta.id) === 'cjs',
+                'bg-violet-500/20 text-violet-600 dark:text-violet-400':
+                  getModuleFormat(nodeHover.meta.id) === 'mixed',
+                'bg-neutral-400/20 text-neutral-500':
+                  getModuleFormat(nodeHover.meta.id) === 'unknown',
               }"
             >
               {{ getModuleFormat(nodeHover.meta.id).toUpperCase() }}
@@ -701,13 +731,10 @@ watch(colorMode, () => {
           >
             <div flex="~ items-center gap-2" p3 border="b base">
               <i i-ph-file-duotone flex-none op50 />
-              <span v-tooltip="selectedModuleId" flex-1 truncate text-sm font-mono>{{ toDisplayPath(selectedModuleId) }}</span>
-              <button
-                op50
-                hover="op100"
-                cursor-pointer
-                @click="closeImporterPanel"
-              >
+              <span v-tooltip="selectedModuleId" flex-1 truncate text-sm font-mono>{{
+                toDisplayPath(selectedModuleId)
+              }}</span>
+              <button op50 hover="op100" cursor-pointer @click="closeImporterPanel">
                 <i i-ph-x block />
               </button>
             </div>
@@ -724,22 +751,28 @@ watch(colorMode, () => {
                       <!-- continuous vertical line (behind dot) -->
                       <div w4 flex-none absolute left-0 top-0 bottom-0 flex justify-center>
                         <!-- top half line -->
-                        <div
-                          v-if="i > 0"
-                          absolute top-0 h="1/2" w-0 border="l 1.5 base"
-                        />
+                        <div v-if="i > 0" absolute top-0 h="1/2" w-0 border="l 1.5 base" />
                         <!-- bottom half line -->
                         <div
                           v-if="i < importerChain.length - 1"
-                          absolute bottom-0 h="1/2" w-0 border="l 1.5 base"
+                          absolute
+                          bottom-0
+                          h="1/2"
+                          w-0
+                          border="l 1.5 base"
                         />
                         <!-- dot -->
                         <div
-                          absolute top="1/2" translate-y="-1/2"
-                          rounded-full z-1
-                          :class="node.id === selectedModuleId
-                            ? 'w-2.5 h-2.5 bg-primary'
-                            : 'w-2 h-2 bg-neutral-300 dark:bg-neutral-500'"
+                          absolute
+                          top="1/2"
+                          translate-y="-1/2"
+                          rounded-full
+                          z-1
+                          :class="
+                            node.id === selectedModuleId
+                              ? 'w-2.5 h-2.5 bg-primary'
+                              : 'w-2 h-2 bg-neutral-300 dark:bg-neutral-500'
+                          "
                         />
                       </div>
                       <!-- label -->
@@ -785,7 +818,9 @@ watch(colorMode, () => {
                   border="b base"
                   @click="selectedModuleId = imp.id"
                 >
-                  <span v-tooltip="imp.displayPath" text-sm font-mono truncate>{{ imp.displayPath }}</span>
+                  <span v-tooltip="imp.displayPath" text-sm font-mono truncate>{{
+                    imp.displayPath
+                  }}</span>
                   <DisplayFileSizeBadge v-if="imp.size" :bytes="imp.size" text-xs />
                 </button>
               </template>

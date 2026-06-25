@@ -11,5 +11,5 @@
       ["unknown"]
     ]
   },
-  "ignorePatterns": [".data/**"]
+  "ignorePatterns": [".data/**", ".changeset/**"]
 }

@@ -1,3 +1,4 @@
+import type { ModuleListItem } from '@rolldown-analyzer/core/types';
 import type { ComputedRefWithControl } from '@vueuse/core';
 import { computedWithControl, onKeyPressed, useEventListener, useMagicKeys } from '@vueuse/core';
 import type { HierarchyLink, HierarchyNode } from 'd3-hierarchy';
@@ -7,7 +8,6 @@ import Fuse from 'fuse.js';
 import type { ComputedRef, InjectionKey, MaybeRef, Ref, ShallowReactive, ShallowRef } from 'vue';
 import { computed, inject, nextTick, provide, ref, shallowReactive, shallowRef, unref } from 'vue';
 
-import type { ModuleListItem } from '@rolldown-analyzer/core/types';
 import { useZoomElement } from './zoom-element';
 
 export interface ModuleGraphNode<M, I> {

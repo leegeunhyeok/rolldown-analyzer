@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { RolldownPluginBuildMetrics, SessionContext } from '@rolldown-analyzer/core/types/data';
+import type {
+  RolldownPluginBuildMetrics,
+  SessionContext,
+} from '@rolldown-analyzer/core/types/data';
 import type { FilterMatchRule } from '../../utils/icon';
 import DataVirtualList from '@rolldown-analyzer/core/ui/components/DataVirtualList.vue';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';

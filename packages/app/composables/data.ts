@@ -1,5 +1,3 @@
-import { computed, shallowRef } from 'vue';
-
 import type {
   ModuleInfo,
   ModuleListItem,
@@ -11,6 +9,8 @@ import type {
   RolldownPluginBuildMetrics,
   SessionContext,
 } from '@rolldown-analyzer/core/types';
+import { computed, shallowRef } from 'vue';
+
 import { getFileTypeFromName } from '../utils/icon';
 
 declare global {

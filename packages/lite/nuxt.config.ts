@@ -77,7 +77,14 @@ export default defineNuxtConfig({
           innerHTML: (() => {
             const isDev = process.env.NODE_ENV !== 'production';
             if (isDev) {
-              const dataPath = path.resolve(import.meta.dirname, '..', '..', '.data', 'analyze', 'analyze-data.json');
+              const dataPath = path.resolve(
+                import.meta.dirname,
+                '..',
+                '..',
+                '.data',
+                'analyze',
+                'analyze-data.json',
+              );
               const json = fs.existsSync(dataPath) ? fs.readFileSync(dataPath, 'utf-8') : '{}';
               return `window.__ANALYZE_DATA__ = ${json};`;
             }
@@ -93,20 +100,10 @@ export default defineNuxtConfig({
     },
   },
   debug: false,
-  components: [
-    { path: '../app/components' },
-    { path: '../core/ui/components', pathPrefix: false },
-  ],
+  components: [{ path: '../app/components' }, { path: '../core/ui/components', pathPrefix: false }],
   imports: {
-    dirs: [
-      '../app/utils',
-      '../app/state',
-      '../core/ui/composables',
-      '../core/ui/utils',
-    ],
-    imports: [
-      { from: '../app/composables/chart', name: 'useChartGraph' },
-    ],
+    dirs: ['../app/utils', '../app/state', '../core/ui/composables', '../core/ui/utils'],
+    imports: [{ from: '../app/composables/chart', name: 'useChartGraph' }],
   },
   vite: {
     build: {

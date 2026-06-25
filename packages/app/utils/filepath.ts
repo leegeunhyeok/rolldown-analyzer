@@ -1,6 +1,6 @@
+import { getModuleNameFromPath, isPackageName } from '@rolldown-analyzer/core/utils/filepath';
 import { relative } from 'pathe';
 
-import { getModuleNameFromPath, isPackageName } from '@rolldown-analyzer/core/utils/filepath';
 import { makeCachedFunction } from './cache';
 
 function getModuleSubpathFromPath(path: string) {

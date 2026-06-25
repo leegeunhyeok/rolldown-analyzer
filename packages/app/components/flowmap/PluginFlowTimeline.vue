@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { SessionContext } from '@rolldown-analyzer/core/types';
-import type { PluginBuildInfo, RolldownPluginBuildMetrics } from '@rolldown-analyzer/core/types/data';
+import type {
+  PluginBuildInfo,
+  RolldownPluginBuildMetrics,
+} from '@rolldown-analyzer/core/types/data';
 import { computed } from 'vue';
 import { settings } from '../../state/settings';
 

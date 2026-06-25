@@ -60,7 +60,13 @@ function handleBack() {
   <div flex items-center gap-2 px-4 py-2 fixed top-4 right-4 z-10>
     <button
       v-if="session"
-      flex items-center justify-center w-8 h-8 rounded cursor-pointer
+      flex
+      items-center
+      justify-center
+      w-8
+      h-8
+      rounded
+      cursor-pointer
       bg="hover:gray-200 dark:hover:gray-700"
       transition-colors
       @click="handleBack"
@@ -71,7 +77,13 @@ function handleBack() {
       href="https://github.com/leegeunhyeok/rolldown-analyzer"
       target="_blank"
       rel="noopener noreferrer"
-      flex items-center justify-center w-8 h-8 rounded cursor-pointer
+      flex
+      items-center
+      justify-center
+      w-8
+      h-8
+      rounded
+      cursor-pointer
       bg="hover:gray-200 dark:hover:gray-700"
       transition-colors
       title="GitHub"
@@ -79,7 +91,13 @@ function handleBack() {
       <div i-simple-icons-github text-sm />
     </a>
     <button
-      flex items-center justify-center w-8 h-8 rounded cursor-pointer
+      flex
+      items-center
+      justify-center
+      w-8
+      h-8
+      rounded
+      cursor-pointer
       bg="hover:gray-200 dark:hover:gray-700"
       transition-colors
       title="Toggle dark mode"
@@ -101,38 +119,39 @@ function handleBack() {
   <div v-else h-full relative flex flex-col items-center justify-center gap-8 px-4>
     <div flex flex-col items-center gap-4>
       <a href="https://rolldown.rs" target="_blank" rel="noopener noreferrer">
-        <img v-if="isDark" :src="rolldownLight" alt="Rolldown" h-12>
-        <img v-else :src="rolldownDark" alt="Rolldown" h-12>
+        <img v-if="isDark" :src="rolldownLight" alt="Rolldown" h-12 />
+        <img v-else :src="rolldownDark" alt="Rolldown" h-12 />
       </a>
-      <div text="gray-500 dark:gray-400 sm">
-        Upload your analyze.json to visualize your bundle
-      </div>
+      <div text="gray-500 dark:gray-400 sm">Upload your analyze.json to visualize your bundle</div>
     </div>
 
     <div flex flex-col items-center gap-4 w-full max-w-sm>
       <!-- File upload -->
       <label
-        flex flex-col items-center justify-center w-full h-40
+        flex
+        flex-col
+        items-center
+        justify-center
+        w-full
+        h-40
         border="2 dashed gray-300 dark:gray-600"
-        rounded-lg cursor-pointer
+        rounded-lg
+        cursor-pointer
         bg="gray-50 dark:gray-800/50 hover:gray-100 dark:hover:gray-800"
         transition-colors
       >
         <div flex flex-col items-center gap-2 text="gray-500 dark:gray-400">
           <div i-carbon-upload text-2xl />
-          <div text-sm font-medium>
-            Click to upload analyze.json
-          </div>
-          <div text-xs op-60>
-            JSON file from bundle analyzer plugin
-          </div>
+          <div text-sm font-medium>Click to upload analyze.json</div>
+          <div text-xs op-60>JSON file from bundle analyzer plugin</div>
         </div>
-        <input type="file" accept=".json" hidden @change="handleFileUpload">
+        <input type="file" accept=".json" hidden @change="handleFileUpload" />
       </label>
 
       <!-- Demo button -->
       <button
-        text="xs gray-400 hover:gray-600 dark:hover:gray-300" cursor-pointer
+        text="xs gray-400 hover:gray-600 dark:hover:gray-300"
+        cursor-pointer
         transition-colors
         :disabled="loading"
         @click="loadDemo"

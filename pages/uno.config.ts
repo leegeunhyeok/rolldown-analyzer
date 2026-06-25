@@ -1,9 +1,8 @@
 import { fileURLToPath } from 'node:url';
 
+import { presetDevToolsUI } from '@rolldown-analyzer/core/ui/unocss';
 import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local';
 import { defineConfig } from 'unocss';
-
-import { presetDevToolsUI } from '@rolldown-analyzer/core/ui/unocss';
 
 const rolldownTheme = {
   colors: {

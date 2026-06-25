@@ -1,5 +1,3 @@
-import { computed } from 'vue';
-
 import type {
   ModuleListItem,
   PackageInfo,
@@ -9,6 +7,8 @@ import type {
 } from '@rolldown-analyzer/core/types';
 import { convertAnalyzeData } from '@rolldown-analyzer/core/utils/convert-analyze-data';
 import type { AnalyzeData } from '@rolldown-analyzer/core/utils/convert-analyze-data';
+import { computed } from 'vue';
+
 import { getFileTypeFromName } from '../../app/utils/icon';
 
 declare global {

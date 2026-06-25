@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import VisualLogoBanner from './VisualLogoBanner.vue'
+import VisualLogoBanner from './VisualLogoBanner.vue';
 
 const props = defineProps<{
-  text?: string
-}>()
+  text?: string;
+}>();
 </script>
 
 <template>

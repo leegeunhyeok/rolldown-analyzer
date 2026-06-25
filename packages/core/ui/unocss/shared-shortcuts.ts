@@ -1,4 +1,4 @@
-import type { DynamicShortcut, StaticShortcutMap } from '@unocss/core'
+import type { DynamicShortcut, StaticShortcutMap } from '@unocss/core';
 
 /**
  * Base semantic shortcuts shared between Wind3 (webcomponents) and Wind4 (Nuxt UIs).
@@ -15,5 +15,8 @@ export const sharedShortcuts: (StaticShortcutMap | DynamicShortcut)[] = [
     'color-active': 'color-primary-600 dark:color-primary-300',
     'border-active': 'border-primary-600/25 dark:border-primary-400/25',
   },
-  [/^bg-glass(:\d+)?$/, ([, opacity = ':50']) => `bg-white${opacity} dark:bg-#111${opacity} backdrop-blur-7`],
-]
+  [
+    /^bg-glass(:\d+)?$/,
+    ([, opacity = ':50']) => `bg-white${opacity} dark:bg-#111${opacity} backdrop-blur-7`,
+  ],
+];

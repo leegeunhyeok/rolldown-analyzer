@@ -1,11 +1,10 @@
-import type { TreeNode } from 'nanovis';
-
 import type {
   PackageInfo,
   PluginBuildInfo,
   RolldownAssetInfo,
   RolldownChunkInfo,
 } from '@rolldown-analyzer/core/types';
+import type { TreeNode } from 'nanovis';
 
 export type AssetChartInfo = Omit<RolldownAssetInfo, 'type'> & {
   path: string;
@@ -38,5 +37,11 @@ export type PluginChartInfo = Omit<PluginBuildInfo, 'type' | 'plugin_id' | 'plug
 
 export type PluginChartNode = TreeNode<PluginChartInfo | undefined>;
 
-export type AnalyzeChartInfo = { id: string; filename: string; path: string; size: number; type: 'folder' | 'module' };
+export type AnalyzeChartInfo = {
+  id: string;
+  filename: string;
+  path: string;
+  size: number;
+  type: 'folder' | 'module';
+};
 export type AnalyzeChartNode = TreeNode<AnalyzeChartInfo | undefined>;

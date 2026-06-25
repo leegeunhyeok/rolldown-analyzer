@@ -1,6 +1,6 @@
+import { isPackageName } from '@rolldown-analyzer/core/utils/filepath';
 import { defineComponent, h } from 'vue';
 
-import { isPackageName } from '@rolldown-analyzer/core/utils/filepath';
 import { getPluginColor } from '../../utils/color';
 
 // @unocss-include

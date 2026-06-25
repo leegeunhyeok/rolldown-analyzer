@@ -1,9 +1,9 @@
+import { isDark } from '@rolldown-analyzer/core/ui/composables/dark';
 import type { GraphBase, GraphBaseOptions, TreeNode } from 'nanovis';
 import { createColorGetterSpectrum } from 'nanovis';
 import type { ComputedRef, MaybeRef } from 'vue';
 import { computed, nextTick, onUnmounted, ref, shallowRef, unref, watch } from 'vue';
 
-import { isDark } from '@rolldown-analyzer/core/ui/composables/dark';
 import { settings } from '../state/settings';
 import { bytesToHumanSize } from '../utils/format';
 

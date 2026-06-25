@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { RolldownChunkImport, RolldownChunkInfo, SessionContext } from '@rolldown-analyzer/core/types';
+import type {
+  RolldownChunkImport,
+  RolldownChunkInfo,
+  SessionContext,
+} from '@rolldown-analyzer/core/types';
 import { useRoute } from '#app/composables/router';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import { computed } from 'vue';

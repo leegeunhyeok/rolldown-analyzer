@@ -1,9 +1,4 @@
-import type {
-  ModuleImport,
-  RolldownChunkInfo,
-  RolldownData,
-  SessionMeta,
-} from '../types/data';
+import type { ModuleImport, RolldownChunkInfo, RolldownData, SessionMeta } from '../types/data';
 
 export interface AnalyzeModule {
   id: string;
@@ -98,9 +93,8 @@ export function convertAnalyzeData(data: AnalyzeData): RolldownData {
       .map((idx) => modules[idx]?.path)
       .filter((p): p is string => p != null);
 
-    const entryModule = chunk.entryModule != null
-      ? (modules[chunk.entryModule]?.path ?? null)
-      : null;
+    const entryModule =
+      chunk.entryModule != null ? (modules[chunk.entryModule]?.path ?? null) : null;
 
     const imports = (chunk.imports ?? []).map((imp) => ({
       chunk_id: imp.chunkIndex,

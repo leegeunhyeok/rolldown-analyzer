@@ -67,7 +67,9 @@ const moduleTree = computed(() => {
     });
 
   return {
-    workspace: toTree(inWorkspace, 'Project Root', { isFlat: (mod) => isVirtualModuleId(mod.full) }),
+    workspace: toTree(inWorkspace, 'Project Root', {
+      isFlat: (mod) => isVirtualModuleId(mod.full),
+    }),
     nodeModules: toTree(inNodeModules, 'Node Modules'),
     virtual: toTree(inVirtual, 'Virtual Modules', { isFlat: (mod) => isVirtualModuleId(mod.full) }),
   };
