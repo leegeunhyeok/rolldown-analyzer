@@ -2,6 +2,7 @@
 import type { ModuleDest, ModuleTreeNode } from '@rolldown-analyzer/core/types';
 import { useRoute } from '#app/composables/router';
 import { NuxtLink } from '#components';
+import { isVirtualModuleId } from '../../utils/filepath';
 
 const props = withDefaults(
   defineProps<{
@@ -12,12 +13,14 @@ const props = withDefaults(
     linkQueryKey?: string;
     padding?: number;
     open?: boolean;
+    childOpen?: boolean;
   }>(),
   {
     icon: 'i-catppuccin:folder icon-catppuccin',
     iconOpen: 'i-catppuccin:folder-open icon-catppuccin',
     padding: 0,
     linkQueryKey: 'module',
+    childOpen: true,
   },
 );
 
@@ -37,12 +40,16 @@ function select(node: ModuleDest) {
     emit('select', node);
   }
 }
+
+function getItemLabel(item: ModuleDest) {
+  return isVirtualModuleId(item.full) ? item.path : item.path.split('/').pop() || '';
+}
 </script>
 
 <template>
   <details :open="open" @toggle="(e) => (open = (e.target as HTMLDetailsElement)?.open)">
     <summary
-      cursor-default
+      cursor-pointer
       select-none
       text-sm
       truncate
@@ -68,6 +75,8 @@ function select(node: ModuleDest) {
         :link="link"
         :padding="padding + 1"
         :link-query-key="linkQueryKey"
+        :open="childOpen"
+        :child-open="childOpen"
         @select="select"
       >
         <template #extra="{ node: n }">
@@ -90,6 +99,7 @@ function select(node: ModuleDest) {
           "
           text-sm
           ws-nowrap
+          cursor-pointer
           flex="~ gap-1"
           px2
           py1
@@ -100,7 +110,7 @@ function select(node: ModuleDest) {
         >
           <DisplayFileIcon :filename="i.full" />
           <div font-mono>
-            <DisplayHighlightedPath :path="i.path.split('/').pop() || ''" />
+            <DisplayHighlightedPath :path="getItemLabel(i)" />
             <slot name="extra" :node="i" />
           </div>
         </component>

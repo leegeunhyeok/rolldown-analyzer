@@ -12,7 +12,11 @@ export function getContentByteSize(content: string) {
   return new TextEncoder().encode(content).length;
 }
 
-export function toTree(modules: ModuleDest[], name: string) {
+export function toTree(
+  modules: ModuleDest[],
+  name: string,
+  options: { isFlat?: (mod: ModuleDest) => boolean } = {},
+) {
   const node: ModuleTreeNode = { name, children: {}, items: [] };
 
   function add(mod: ModuleDest, parts: string[], current = node) {
@@ -30,7 +34,7 @@ export function toTree(modules: ModuleDest[], name: string) {
   }
 
   modules.forEach((m) => {
-    const parts = m.path.split(/\//g).filter(Boolean);
+    const parts = options.isFlat?.(m) ? [m.path] : m.path.split(/\//g).filter(Boolean);
     add(m, parts);
   });
 

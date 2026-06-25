@@ -26,7 +26,7 @@ export interface ClientSettings {
   pluginDetailsShowType: 'changed' | 'unchanged' | 'all';
   packageViewType: 'table' | 'treemap' | 'duplicate-packages';
   packageSizeSortType: string;
-  analyzeViewType: 'treemap' | 'sunburst' | 'flamegraph';
+  analyzeViewType: 'treemap' | 'sunburst' | 'flamegraph' | 'graph' | 'folder';
   analyzeSelectedChunk: number | null;
 }
 

@@ -1,4 +1,5 @@
 import { makeCachedFunction } from './cache';
+import { isVirtualModuleId } from './filepath';
 
 export interface FilterMatchRule {
   match: RegExp;
@@ -17,7 +18,7 @@ export const ModuleTypeRules: FilterMatchRule[] = [
   },
   {
     // oxlint-disable-next-line no-control-regex
-    match: /virtual:|^\0/,
+    match: /virtual:|^\0|^\\0/,
     name: 'virtual',
     description: 'Virtual',
     icon: 'i-catppuccin-symlink',
@@ -174,6 +175,9 @@ export function getFileTypeFromName(name: string) {
 
 export const getFileTypeFromModuleId = makeCachedFunction((moduleId: string): FilterMatchRule => {
   moduleId = moduleId.replace(/(\?|&)v=[^&]*/, '$1').replace(/\?$/, '');
+  if (isVirtualModuleId(moduleId)) {
+    return getFileTypeFromName('virtual');
+  }
 
   for (const rule of ModuleTypeRules) {
     if (rule.match.test(moduleId)) {

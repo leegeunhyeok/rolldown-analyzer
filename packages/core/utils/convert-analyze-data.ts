@@ -1,4 +1,5 @@
 import type {
+  ModuleImport,
   RolldownChunkInfo,
   RolldownData,
   SessionMeta,
@@ -31,6 +32,7 @@ export interface AnalyzeMeta {
   bundler: string;
   version: string;
   timestamp: number;
+  cwd?: string;
 }
 
 export interface AnalyzeData {
@@ -41,8 +43,23 @@ export interface AnalyzeData {
 
 export function convertAnalyzeData(data: AnalyzeData): RolldownData {
   const modules = data.modules;
+  const importsByModule = new Map<number, ModuleImport[]>();
 
-  const convertedModules: RolldownData['modules'] = modules.map((mod) => {
+  modules.forEach((mod) => {
+    for (const importerIndex of mod.importers ?? []) {
+      if (!modules[importerIndex]) continue;
+
+      const imports = importsByModule.get(importerIndex) ?? [];
+      imports.push({
+        kind: 'import-statement',
+        module_id: mod.path,
+        module_request: mod.path,
+      } as ModuleImport);
+      importsByModule.set(importerIndex, imports);
+    }
+  });
+
+  const convertedModules: RolldownData['modules'] = modules.map((mod, moduleIndex) => {
     const moduleId = mod.path;
     const importers = (mod.importers ?? [])
       .map((idx) => modules[idx]?.path)
@@ -50,7 +67,7 @@ export function convertAnalyzeData(data: AnalyzeData): RolldownData {
 
     return {
       id: moduleId,
-      imports: [],
+      imports: importsByModule.get(moduleIndex) ?? [],
       importers,
       build_metrics: {
         resolve_ids: [],
@@ -109,7 +126,7 @@ export function convertAnalyzeData(data: AnalyzeData): RolldownData {
     session_id: 'analyze',
     inputs: [],
     plugins: [],
-    cwd: '',
+    cwd: data.meta.cwd ?? '',
     platform: 'node',
     format: 'esm',
     dir: null,

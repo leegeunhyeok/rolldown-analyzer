@@ -1,16 +1,22 @@
 <script setup lang="ts">
-import type { RolldownChunkInfo, SessionContext } from '@rolldown-analyzer/core/types/data';
+import type {
+  ModuleDest,
+  ModuleImport,
+  ModuleListItem,
+  RolldownChunkInfo,
+  SessionContext,
+} from '@rolldown-analyzer/core/types/data';
 import type { ClientSettings } from '../../state/settings';
 import type { AnalyzeChartInfo, AnalyzeChartNode } from '../../types/chart';
 import { computedWithControl, useMouse } from '@vueuse/core';
 import Fuse from 'fuse.js';
-import type { ModuleImport } from '@rolldown-analyzer/core/types/data';
 import { Flamegraph, Sunburst, Treemap } from 'nanovis';
 import { computed, reactive, ref, watch } from 'vue';
 import { guessChunkName } from '@rolldown-analyzer/core/utils/guess-chunk-name';
 import ChartTreemap from '../chart/Treemap.vue';
 import { isDark } from '@rolldown-analyzer/core/ui/composables/dark';
 import { useChartGraph } from '../../composables/chart';
+import { useGraphPathManager } from '../../composables/graph-path-selector';
 import { parseReadablePath } from '../../utils/filepath';
 import { settings } from '../../state/settings';
 
@@ -39,6 +45,27 @@ const analyzeViewTypes = [
     icon: 'i-ph-chart-bar-horizontal-duotone',
   },
 ] as const;
+
+const liteAnalyzeViewTypes = [
+  {
+    label: 'Graph',
+    value: 'graph',
+    icon: 'i-ph-graph-duotone',
+  },
+  {
+    label: 'Folder',
+    value: 'folder',
+    icon: 'i-ph-folder-duotone',
+  },
+] as const;
+
+const visibleAnalyzeViewTypes = computed(() =>
+  props.standalone ? [...analyzeViewTypes, ...liteAnalyzeViewTypes] : analyzeViewTypes,
+);
+
+function isAnalyzeChartView(type: ClientSettings['analyzeViewType']) {
+  return type === 'treemap' || type === 'sunburst' || type === 'flamegraph';
+}
 
 const searchValue = ref<{ search: string }>({
   search: '',
@@ -136,6 +163,10 @@ const modulesMap = computed(() => {
   return map;
 });
 
+const moduleItemsMap = computed(() => {
+  return new Map(props.session.modulesList.map((module) => [module.id, module]));
+});
+
 // Chunk selection
 const chunkOptions = computed(() => {
   return (chunksData.value ?? []).map((chunk) => ({
@@ -162,23 +193,44 @@ function toDisplayPath(moduleId: string): string {
   return parseReadablePath(moduleId, props.session.meta.cwd).path;
 }
 
-// Compute module data for the selected chunk
-const moduleData = computed(() => {
+function getModuleSize(module: ModuleListItem): number {
+  const transforms = module.buildMetrics?.transforms;
+  return transforms?.[transforms.length - 1]?.transformed_code_size ?? 0;
+}
+
+const selectedModules = computed<ModuleListItem[]>(() => {
   const chunk = selectedChunk.value;
   if (!chunk) return [];
+
+  const selectedIds = new Set(chunk.modules);
+  return chunk.modules.flatMap((moduleId) => {
+    const module = moduleItemsMap.value.get(moduleId);
+    if (!module) return [];
+
+    return [{
+      ...module,
+      path: toRelativePath(module.id),
+      imports: module.imports.filter((imp) => selectedIds.has(imp.module_id)),
+      importers: module.importers.filter((importerId) => selectedIds.has(importerId)),
+    }];
+  });
+});
+
+// Compute module data for the selected chunk
+const moduleData = computed(() => {
   const seen = new Set<string>();
   const result: Array<{ id: string; filename: string; size: number }> = [];
 
-  for (const moduleId of chunk.modules) {
-    if (seen.has(moduleId)) continue;
-    seen.add(moduleId);
+  for (const module of selectedModules.value) {
+    if (seen.has(module.id)) continue;
+    seen.add(module.id);
 
-    const size = modulesMap.value.get(moduleId) ?? 0;
+    const size = getModuleSize(module);
     if (size === 0) continue;
 
     result.push({
-      id: moduleId,
-      filename: toRelativePath(moduleId),
+      id: module.id,
+      filename: module.path ?? toRelativePath(module.id),
       size,
     });
   }
@@ -204,7 +256,38 @@ const searched = computed(() => {
   return fuse.value.search(searchValue.value.search).map((r) => r.item);
 });
 
+const modulesFuse = computedWithControl(
+  () => selectedModules.value,
+  () =>
+    new Fuse(selectedModules.value, {
+      includeScore: true,
+      keys: ['id', 'path'],
+      ignoreLocation: true,
+      threshold: 0.4,
+    }),
+);
+
+const searchedModules = computed<ModuleListItem[]>(() => {
+  if (!searchValue.value.search) {
+    return selectedModules.value;
+  }
+  return modulesFuse.value.search(searchValue.value.search).map((r) => r.item);
+});
+
+const { pathSelectorVisible, selectPathNodes, togglePathSelector, normalizedGraph } =
+  useGraphPathManager<ModuleListItem>({
+    onToggle() {
+      searchValue.value.search = '';
+    },
+    dataMap: computed(() => new Map(selectedModules.value.map((module) => [module.id, module]))),
+    list: searchedModules,
+    importIdKey: 'module_id',
+  });
+
 function toggleDisplay(type: ClientSettings['analyzeViewType']) {
+  if (type !== 'graph') {
+    togglePathSelector(false);
+  }
   settings.value.analyzeViewType = type;
 }
 
@@ -271,6 +354,14 @@ const importerChain = computed(() => {
 
 function closeImporterPanel() {
   selectedModuleId.value = null;
+}
+
+function selectGraphModule(module: ModuleListItem) {
+  selectedModuleId.value = module.id;
+}
+
+function selectFolderModule(node: ModuleDest) {
+  selectedModuleId.value = node.full;
 }
 
 const { tree, chartOptions, graph, nodeHover, nodeSelected, selectedNode, selectNode: _selectNode, buildGraph } =
@@ -352,10 +443,17 @@ function selectNode(node: AnalyzeChartNode | null, animate?: boolean) {
 }
 
 watch(
-  () => settings.value.analyzeViewType,
-  () => {
+  () => [props.standalone, settings.value.analyzeViewType] as const,
+  ([standalone, viewType]) => {
+    if (!standalone && !isAnalyzeChartView(viewType)) {
+      settings.value.analyzeViewType = 'treemap';
+      return;
+    }
+    if (!isAnalyzeChartView(viewType)) return;
+
     buildGraph();
   },
+  { immediate: true },
 );
 
 watch(colorMode, () => {
@@ -367,6 +465,55 @@ watch(colorMode, () => {
   <div relative max-h-screen of-hidden>
     <div absolute left-4 top-4 z-panel-nav>
       <DataSearchPanel v-model="searchValue" :rules="[]">
+        <template v-if="pathSelectorVisible" #search>
+          <DataPathSelector
+            :session="session"
+            :data="searchedModules"
+            import-id-key="module_id"
+            :search-keys="['id', 'path']"
+            @select="selectPathNodes"
+            @close="togglePathSelector(false)"
+          >
+            <template #list="{ select, data }">
+              <ModulesFlatList
+                v-if="data?.length"
+                :session="session"
+                :modules="data"
+                disable-tooltip
+                :link="false"
+                @select="select"
+              />
+            </template>
+            <template #item="{ id }">
+              <DisplayModuleId
+                :id="id"
+                :session="session"
+                block
+                text-nowrap
+                :link="false"
+                :disable-tooltip="true"
+              />
+            </template>
+          </DataPathSelector>
+        </template>
+        <template #search-end>
+          <div v-if="standalone && settings.analyzeViewType === 'graph'" h10 mr2 flex="~ items-center">
+            <button
+              w-8
+              h-8
+              rounded-full
+              flex
+              items-center
+              justify-center
+              hover="bg-active op100"
+              op50
+              title="Graph Path Selector"
+              @click="togglePathSelector(true)"
+            >
+              <i i-ri:route-line flex />
+            </button>
+          </div>
+        </template>
         <div flex="~ gap-2 items-center" p2 border="t base">
           <span op50 pl2 text-sm>Chunk</span>
           <select
@@ -386,7 +533,7 @@ watch(colorMode, () => {
         <div flex="~ gap-2 items-center" p2 border="t base">
           <span op50 pl2 text-sm>View as</span>
           <button
-            v-for="viewType of analyzeViewTypes"
+            v-for="viewType of visibleAnalyzeViewTypes"
             :key="viewType.value"
             btn-action
             :class="settings.analyzeViewType === viewType.value ? 'bg-active' : 'grayscale op50'"
@@ -428,7 +575,14 @@ watch(colorMode, () => {
         </div>
       </DataSearchPanel>
     </div>
-    <div of-auto h-screen flex="~ col gap-2" :pt="standalone ? 40 : 56" pb4>
+    <div
+      v-if="isAnalyzeChartView(settings.analyzeViewType)"
+      of-auto
+      h-screen
+      flex="~ col gap-2"
+      :pt="standalone ? 40 : 56"
+      pb4
+    >
       <template v-if="settings.analyzeViewType === 'treemap'">
         <ChartTreemap
           v-if="graph"
@@ -460,6 +614,24 @@ watch(colorMode, () => {
         <AnalyzeFlamegraph v-if="graph" :graph="graph" />
       </template>
     </div>
+    <template v-else-if="standalone && settings.analyzeViewType === 'graph'">
+      <ModulesGraph
+        :session="session"
+        :modules="normalizedGraph"
+        compact
+        :link="false"
+        @select="selectGraphModule"
+      />
+    </template>
+    <template v-else-if="standalone && settings.analyzeViewType === 'folder'">
+      <ModulesFolder
+        :session="session"
+        :modules="searchedModules"
+        :split-by-source="false"
+        :link="false"
+        @select="selectFolderModule"
+      />
+    </template>
     <DisplayGraphHoverView :hover-x="mouse.x" :hover-y="mouse.y">
       <div
         v-if="nodeHover?.meta"

@@ -7,9 +7,24 @@ import { createModuleGraph } from '../../composables/module-graph';
 const props = defineProps<{
   modules: ModuleListItem[];
   session: SessionContext;
+  compact?: boolean;
+  link?: string | boolean;
 }>();
 
 const modules = computed(() => props.modules);
+
+const emit = defineEmits<{
+  (e: 'select', module: ModuleListItem): void;
+}>();
+
+function setNodeRef(
+  nodesRefMap: Map<string, HTMLDivElement>,
+  id: string,
+  el: HTMLElement | { $el?: HTMLElement } | null,
+) {
+  const target = el && '$el' in el ? el.$el : el;
+  if (target) nodesRefMap.set(id, target as HTMLDivElement);
+}
 
 createModuleGraph<ModuleListItem, ModuleImport>({
   modules,
@@ -181,10 +196,22 @@ createModuleGraph<ModuleListItem, ModuleImport>({
 <template>
   <DisplayModuleGraph :session="session" :modules="modules">
     <template #default="{ node, nodesRefMap }">
+      <button
+        v-if="compact"
+        :ref="(el: any) => setNodeRef(nodesRefMap, node.data.module.id, el)"
+        type="button"
+        :title="node.data.module.path ?? node.data.module.id"
+        class="appearance-none bg-transparent border-0 p0 m0 color-inherit font-inherit cursor-pointer w-full min-w-0 text-left flex items-center"
+        @click="emit('select', node.data.module)"
+      >
+        <DisplayFileIcon :filename="node.data.module.id" mr1.5 shrink-0 />
+        <span font-mono text-sm truncate>{{ node.data.module.path ?? node.data.module.id }}</span>
+      </button>
       <DisplayModuleId
+        v-else
         :id="node.data.module.id"
-        :ref="(el: any) => nodesRefMap.set(node.data.module.id, el?.$el)"
-        :link="true"
+        :ref="(el: any) => setNodeRef(nodesRefMap, node.data.module.id, el)"
+        :link="link ?? true"
         :session="session"
         :minimal="true"
         flex="1"

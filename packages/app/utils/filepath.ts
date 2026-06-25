@@ -14,8 +14,20 @@ export function isBuiltInModule(name: string | undefined) {
   return ['nuxt', '#app', '#head', 'vue'].includes(name);
 }
 
+export function isVirtualModuleId(id: string) {
+  return id.startsWith('virtual:') || id.startsWith('\\0') || id.charCodeAt(0) === 0;
+}
+
 export const parseReadablePath = makeCachedFunction((path: string, root: string) => {
-  const parsedPath = path.replace(/%2F/g, '/').replace(/\\/g, '/');
+  const decodedPath = path.replace(/%2F/g, '/');
+  if (isVirtualModuleId(decodedPath)) {
+    return {
+      moduleName: decodedPath,
+      path: decodedPath,
+    };
+  }
+
+  const parsedPath = decodedPath.replace(/\\/g, '/');
   if (isPackageName(parsedPath)) {
     return {
       moduleName: parsedPath,
