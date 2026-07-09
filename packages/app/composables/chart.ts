@@ -5,7 +5,7 @@ import type { ComputedRef, MaybeRef } from 'vue';
 import { computed, nextTick, onUnmounted, ref, shallowRef, unref, watch } from 'vue';
 
 import { settings } from '../state/settings';
-import { bytesToHumanSize } from '../utils/format';
+import { bytesToHumanSize, splitModulePath } from '../utils/format';
 
 export interface ChartGraphOptions<T, I, N> {
   data: ComputedRef<T[]> | MaybeRef<T[]>;
@@ -122,7 +122,7 @@ export function useChartGraph<
     }
 
     function processData(data: T) {
-      const parts: string[] = data[nameKey].split('/').filter(Boolean);
+      const parts: string[] = splitModulePath(data[nameKey]);
       let current = root;
       let currentPath = '';
       let depth = 0;

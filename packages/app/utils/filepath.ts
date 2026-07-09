@@ -45,8 +45,24 @@ export const parseReadablePath = makeCachedFunction((path: string, root: string)
     };
   }
 
+  let relativePath: string | undefined;
+  try {
+    const isRelativePath = parsedPath.startsWith('./') || parsedPath.startsWith('../');
+    relativePath = root && !isRelativePath ? relative(root, parsedPath) : parsedPath;
+    if (root && !relativePath.startsWith('./') && !relativePath.startsWith('../')) {
+      relativePath = `./${relativePath}`;
+    }
+    if (relativePath.startsWith('./.nuxt/')) relativePath = `#build${relativePath.slice(7)}`;
+  } catch {}
+
   const moduleName = getModuleNameFromPath(parsedPath);
   const subpath = getModuleSubpathFromPath(parsedPath);
+  if (relativePath?.startsWith('../')) {
+    return {
+      moduleName,
+      path: relativePath,
+    };
+  }
   if (moduleName && subpath) {
     return {
       moduleName,
@@ -54,12 +70,5 @@ export const parseReadablePath = makeCachedFunction((path: string, root: string)
     };
   }
   // Workaround https://github.com/unjs/pathe/issues/113
-  try {
-    let result = relative(root, parsedPath);
-    if (root && !result.startsWith('./') && !result.startsWith('../')) result = `./${result}`;
-    if (result.startsWith('./.nuxt/')) result = `#build${result.slice(7)}`;
-    return { path: result };
-  } catch {
-    return { path: parsedPath };
-  }
+  return { path: relativePath ?? parsedPath };
 });

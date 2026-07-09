@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ModuleDest, ModuleListItem, SessionContext } from '@rolldown-analyzer/core/types';
 import { computed } from 'vue';
-import { isVirtualModuleId } from '../../utils/filepath';
+import { isVirtualModuleId, parseReadablePath } from '../../utils/filepath';
 import { toTree } from '../../utils/format';
 
 const props = defineProps<{
@@ -17,6 +17,10 @@ const emit = defineEmits<{
 
 function hasTreeNodeContent(node: { children: Record<string, unknown>; items: unknown[] }) {
   return Object.keys(node.children).length > 0 || node.items.length > 0;
+}
+
+function isNodeModuleFile(path: string) {
+  return /[/\\]node_modules[/\\]/.test(path);
 }
 
 const moduleTree = computed(() => {
@@ -41,26 +45,17 @@ const moduleTree = computed(() => {
   const inVirtual: ModuleDest[] = [];
 
   props.modules
-    .map((i) => ({ full: i.id, path: i.path! }))
+    .map((i) => ({
+      full: i.id,
+      path: i.path ?? parseReadablePath(i.id, props.session.meta.cwd).path,
+    }))
     .forEach((i) => {
       if (props.splitBySource === false) {
         inWorkspace.push(i);
-        return;
-      }
-
-      if (props.session.meta.cwd && i.full.startsWith(props.session.meta.cwd)) {
-        if (!i.path.startsWith('../')) {
-          i.path = i.full.slice(props.session.meta.cwd.length + 1);
-        }
-
-        inWorkspace.push(i);
-      } else if (i.full.includes('node_modules')) {
-        inNodeModules.push({
-          full: i.full,
-          path: i.full,
-        });
       } else if (isVirtualModuleId(i.full)) {
         inVirtual.push(i);
+      } else if (isNodeModuleFile(i.full)) {
+        inNodeModules.push(i);
       } else {
         inWorkspace.push(i);
       }

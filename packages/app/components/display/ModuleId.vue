@@ -5,8 +5,8 @@ import { useRoute } from '#app/composables/router';
 import { NuxtLink } from '#components';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import { Tooltip } from 'floating-vue';
-import { relative } from 'pathe';
 import { computed } from 'vue';
+import { parseReadablePath } from '../../utils/filepath';
 
 const props = withDefaults(
   defineProps<{
@@ -31,13 +31,7 @@ const location = window.location;
 
 const relativePath = computed(() => {
   if (!props.id) return '';
-  const id = props.id.replace(/%2F/g, '/');
-  const cwd = props.cwd || props.session!.meta.cwd;
-  let relate = cwd ? relative(cwd, id) : id;
-  if (!relate.startsWith('.')) relate = `./${relate}`;
-  if (relate.startsWith('./')) return relate;
-  if (relate.match(/^(?:\.\.\/){1,3}[^.]/)) return relate;
-  return id;
+  return parseReadablePath(props.id, props.cwd || props.session?.meta.cwd || '').path;
 });
 
 const containerClass = computed(() => {

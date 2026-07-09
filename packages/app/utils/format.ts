@@ -12,6 +12,13 @@ export function getContentByteSize(content: string) {
   return new TextEncoder().encode(content).length;
 }
 
+export function splitModulePath(path: string) {
+  return path
+    .replace(/\\/g, '/')
+    .split(/\//g)
+    .filter((part) => part && part !== '.');
+}
+
 export function toTree(
   modules: ModuleDest[],
   name: string,
@@ -34,15 +41,15 @@ export function toTree(
   }
 
   modules.forEach((m) => {
-    const parts = options.isFlat?.(m) ? [m.path] : m.path.split(/\//g).filter(Boolean);
+    const parts = options.isFlat?.(m) ? [m.path] : splitModulePath(m.path);
     add(m, parts);
   });
 
   function flat(node: ModuleTreeNode) {
     if (!node) return;
     const children = Object.values(node.children);
-    if (children.length === 1 && !node.items.length) {
-      const child = children[0]!;
+    const child = children[0];
+    if (children.length === 1 && child && !node.items.length && node.name !== '..') {
       node.name = node.name ? `${node.name}/${child.name}` : child.name;
       node.items = child.items;
       node.children = child.children;
