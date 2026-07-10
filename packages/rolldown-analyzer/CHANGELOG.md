@@ -1,5 +1,11 @@
 # rolldown-analyzer
 
+## 0.3.1
+
+### Patch Changes
+
+- f345c4d: preserve parent-relative module paths in folder views
+
 ## 0.3.0
 
 ### Minor Changes
