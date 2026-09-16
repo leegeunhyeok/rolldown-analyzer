@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { SessionContext } from '@rolldown-analyzer/core/types';
 import { useRoute, useRouter } from '#app/composables/router';
 import { clearUndefined, toArray } from '@antfu/utils';
+import type { SessionContext } from '@rolldown-analyzer/core/types';
 import { computedWithControl, watchDebounced } from '@vueuse/core';
 import Fuse from 'fuse.js';
 import { computed, ref } from 'vue';
+
 import { DefaultPluginType, getPluginTypeFromName, PluginTypeRules } from '../utils/icon';
 
 const props = defineProps<{

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { TreeNodeInput } from 'nanovis';
 import type {
   ModuleInfo,
   RolldownModuleLoadInfo,
@@ -8,6 +7,7 @@ import type {
   SessionContext,
 } from '@rolldown-analyzer/core/types';
 import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDuration.vue';
+import type { TreeNodeInput } from 'nanovis';
 import { Flamegraph, normalizeTreeNode } from 'nanovis';
 import {
   computed,
@@ -19,6 +19,7 @@ import {
   useTemplateRef,
   watch,
 } from 'vue';
+
 import { normalizeTimestamp } from '../../utils/format';
 
 const props = defineProps<{

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { PackageInfo, SessionContext } from '@rolldown-analyzer/core/types';
 import { useRoute } from '#app/composables/router';
+import type { PackageInfo, SessionContext } from '@rolldown-analyzer/core/types';
 import DataVirtualList from '@rolldown-analyzer/core/ui/components/DataVirtualList.vue';
 import { useCycleList } from '@vueuse/core';
 import { Tooltip, Menu as VMenu } from 'floating-vue';
+
 import { settings } from '../../../app/state/settings';
 
 withDefaults(

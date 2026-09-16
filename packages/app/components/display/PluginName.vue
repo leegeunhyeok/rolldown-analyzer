@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { h } from 'vue';
+
 import { getPluginColor } from '../../utils/color';
 
 const props = defineProps<{

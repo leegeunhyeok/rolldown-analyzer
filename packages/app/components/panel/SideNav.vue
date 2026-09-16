@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { SideNavItem } from '../../state/nav';
 import { NuxtLink } from '#components';
 import { toggleDark } from '@rolldown-analyzer/core/ui/composables/dark';
 import { computed } from 'vue';
+
+import type { SideNavItem } from '../../state/nav';
 import { sideNavItems } from '../../state/nav';
 
 const items = computed<SideNavItem[]>(() => [

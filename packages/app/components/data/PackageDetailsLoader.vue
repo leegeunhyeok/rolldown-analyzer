@@ -3,6 +3,7 @@ import type { SessionContext } from '@rolldown-analyzer/core/types/data';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';
 import { computed } from 'vue';
+
 import { useData } from '../../composables/data';
 
 const props = defineProps<{

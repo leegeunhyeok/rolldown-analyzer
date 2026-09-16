@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { ModuleDest, ModuleTreeNode } from '@rolldown-analyzer/core/types';
 import { useRoute } from '#app/composables/router';
 import { NuxtLink } from '#components';
+import type { ModuleDest, ModuleTreeNode } from '@rolldown-analyzer/core/types';
+
 import { isVirtualModuleId } from '../../utils/filepath';
 
 const props = withDefaults(

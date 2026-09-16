@@ -6,19 +6,20 @@ import type {
   RolldownChunkInfo,
   SessionContext,
 } from '@rolldown-analyzer/core/types/data';
-import type { ClientSettings } from '../../state/settings';
-import type { AnalyzeChartInfo, AnalyzeChartNode } from '../../types/chart';
+import { isDark } from '@rolldown-analyzer/core/ui/composables/dark';
+import { guessChunkName } from '@rolldown-analyzer/core/utils/guess-chunk-name';
 import { computedWithControl, useMouse } from '@vueuse/core';
 import Fuse from 'fuse.js';
 import { Flamegraph, Sunburst, Treemap } from 'nanovis';
 import { computed, reactive, ref, watch } from 'vue';
-import { guessChunkName } from '@rolldown-analyzer/core/utils/guess-chunk-name';
-import ChartTreemap from '../chart/Treemap.vue';
-import { isDark } from '@rolldown-analyzer/core/ui/composables/dark';
+
 import { useChartGraph } from '../../composables/chart';
 import { useGraphPathManager } from '../../composables/graph-path-selector';
-import { parseReadablePath } from '../../utils/filepath';
+import type { ClientSettings } from '../../state/settings';
 import { settings } from '../../state/settings';
+import type { AnalyzeChartInfo, AnalyzeChartNode } from '../../types/chart';
+import { parseReadablePath } from '../../utils/filepath';
+import ChartTreemap from '../chart/Treemap.vue';
 
 const props = defineProps<{
   session: SessionContext;

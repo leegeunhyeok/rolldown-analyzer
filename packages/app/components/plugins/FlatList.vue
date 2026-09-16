@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { PluginItem } from '@rolldown-analyzer/core/types';
 import { useRoute } from '#app/composables/router';
+import type { PluginItem } from '@rolldown-analyzer/core/types';
 import DataVirtualList from '@rolldown-analyzer/core/ui/components/DataVirtualList.vue';
 
 defineProps<{

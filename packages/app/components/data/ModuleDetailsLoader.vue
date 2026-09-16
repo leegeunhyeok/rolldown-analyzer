@@ -6,6 +6,7 @@ import type {
 } from '@rolldown-analyzer/core/types';
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';
 import { computed, ref } from 'vue';
+
 import { settings } from '../../../app/state/settings';
 import { useData } from '../../composables/data';
 

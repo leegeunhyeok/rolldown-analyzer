@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { useRoute } from '#app/composables/router';
 import type {
   RolldownChunkImport,
   RolldownChunkInfo,
   SessionContext,
 } from '@rolldown-analyzer/core/types';
-import { useRoute } from '#app/composables/router';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import { computed } from 'vue';
+
 import { useData } from '../../composables/data';
 
 const props = withDefaults(

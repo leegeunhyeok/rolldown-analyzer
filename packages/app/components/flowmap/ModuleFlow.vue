@@ -8,6 +8,7 @@ import type {
 import { vOnClickOutside } from '@vueuse/components';
 import { Pane, Splitpanes } from 'splitpanes';
 import { shallowRef, toRefs, watch } from 'vue';
+
 import ModuleFlowDetails from './ModuleFlowDetails.vue';
 import ModuleFlowTimeline from './ModuleFlowTimeline.vue';
 

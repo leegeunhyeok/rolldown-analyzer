@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { AnalyzeData } from '@rolldown-analyzer/core/utils/convert-analyze-data';
 import { isDark, toggleDark } from '@rolldown-analyzer/core/ui/composables/dark';
+import type { AnalyzeData } from '@rolldown-analyzer/core/utils/convert-analyze-data';
+
 import rolldownDark from '../public/rolldown-dark.svg';
 import rolldownLight from '../public/rolldown-light.svg';
 

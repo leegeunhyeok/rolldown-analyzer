@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { GraphBase, GraphBaseOptions } from 'nanovis';
 import type { SessionContext } from '@rolldown-analyzer/core/types';
-import type { PluginChartInfo, PluginChartNode } from '../../types/chart';
 import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDuration.vue';
+import type { GraphBase, GraphBaseOptions } from 'nanovis';
 import { colorToCssBackground } from 'nanovis';
 import { useTemplateRef, watchEffect } from 'vue';
+
+import type { PluginChartInfo, PluginChartNode } from '../../types/chart';
 
 const props = defineProps<{
   graph: GraphBase<PluginChartInfo | undefined, GraphBaseOptions<PluginChartInfo | undefined>>;

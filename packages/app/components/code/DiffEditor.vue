@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type CodeMirror from 'codemirror';
-import { Pane, Splitpanes } from 'splitpanes';
+import { Pane, Splitpanes, type SplitpanesResizePayload } from 'splitpanes';
 import { computed, nextTick, onMounted, toRefs, useTemplateRef, watchEffect } from 'vue';
+
 import {
   guessCodemirrorMode,
   syncEditorScrolls,
@@ -124,10 +125,14 @@ function onUpdate(size: number) {
   if (props.oneColumn) return;
   settings.value.codeviewerDiffPanelSize = size;
 }
+
+function onResize(event: SplitpanesResizePayload) {
+  if (event.prevPane) onUpdate(event.prevPane.size);
+}
 </script>
 
 <template>
-  <Splitpanes @resize="onUpdate($event.prevPane.size)">
+  <Splitpanes @resize="onResize">
     <Pane v-show="!oneColumn" min-size="10" :size="leftPanelSize">
       <div ref="fromEl" h-inherit />
     </Pane>

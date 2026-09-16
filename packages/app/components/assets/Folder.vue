@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ModuleDest, RolldownAssetInfo, SessionContext } from '@rolldown-analyzer/core/types';
 import { computed } from 'vue';
+
 import { toTree } from '../../utils/format';
 
 const props = defineProps<{

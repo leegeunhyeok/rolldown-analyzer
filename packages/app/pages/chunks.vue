@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import type { RolldownChunkInfo, SessionContext } from '@rolldown-analyzer/core/types/data';
-import type { ClientSettings } from '../state/settings';
-import type { ChunkChartInfo, ChunkChartNode } from '../types/chart';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import { computedWithControl, useMouse } from '@vueuse/core';
 import Fuse from 'fuse.js';
 import { Flamegraph, Sunburst, Treemap } from 'nanovis';
 import { computed, reactive, ref, watch } from 'vue';
+
 import ChartTreemap from '../components/chart/Treemap.vue';
 import { useChartGraph } from '../composables/chart';
 import { useData } from '../composables/data';
 import { useGraphPathManager } from '../composables/graph-path-selector';
+import type { ClientSettings } from '../state/settings';
 import { settings } from '../state/settings';
+import type { ChunkChartInfo, ChunkChartNode } from '../types/chart';
 
 const props = defineProps<{
   session: SessionContext;

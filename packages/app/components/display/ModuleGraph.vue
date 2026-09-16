@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="T extends { id: string; imports: unknown[] }, I">
 import type { SessionContext } from '@rolldown-analyzer/core/types';
 import { onMounted, unref, watch } from 'vue';
+
 import {
   generateModuleGraphLink,
   getModuleGraphLinkColor,

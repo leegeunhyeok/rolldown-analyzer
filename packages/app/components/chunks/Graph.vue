@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { ChunkImport } from '@rolldown/debug';
-import type { RolldownChunkInfo, SessionContext } from '@rolldown-analyzer/core/types/data';
-import type { ModuleGraphLink, ModuleGraphNode } from '../../composables/module-graph';
 import { useRoute } from '#app/composables/router';
+import type { RolldownChunkInfo, SessionContext } from '@rolldown-analyzer/core/types/data';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
+import type { ChunkImport } from '@rolldown/debug';
 import { computed, nextTick, unref } from 'vue';
+
+import type { ModuleGraphLink, ModuleGraphNode } from '../../composables/module-graph';
 import { createModuleGraph } from '../../composables/module-graph';
 
 type ChunkInfo = RolldownChunkInfo & {

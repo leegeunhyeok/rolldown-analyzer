@@ -2,6 +2,7 @@
 import type { SessionContext } from '@rolldown-analyzer/core/types';
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';
 import { computed } from 'vue';
+
 import { useData } from '../../composables/data';
 
 const props = defineProps<{

@@ -1,7 +1,8 @@
 <script setup lang="ts" generic="T extends { id: string; imports: any[] }">
 import type { SessionContext } from '@rolldown-analyzer/core/types';
-import type { GraphPathSelector } from '../../composables/graph-path-selector';
 import { hideAllPoppers, Menu as VMenu } from 'floating-vue';
+
+import type { GraphPathSelector } from '../../composables/graph-path-selector';
 
 withDefaults(
   defineProps<{

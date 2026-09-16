@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { ModuleListItem, SessionContext } from '@rolldown-analyzer/core/types';
-import type { ClientSettings } from '../../state/settings';
 import { useRoute, useRouter } from '#app/composables/router';
 import { clearUndefined, toArray } from '@antfu/utils';
+import type { ModuleListItem, SessionContext } from '@rolldown-analyzer/core/types';
 import { computedWithControl, watchDebounced } from '@vueuse/core';
 import Fuse from 'fuse.js';
 import { computed, ref } from 'vue';
+
 import { useGraphPathManager } from '../../composables/graph-path-selector';
+import type { ClientSettings } from '../../state/settings';
 import { settings } from '../../state/settings';
 import { parseReadablePath } from '../../utils/filepath';
 import { getFileTypeFromModuleId, ModuleTypeRules } from '../../utils/icon';

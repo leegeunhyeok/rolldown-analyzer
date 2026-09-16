@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import { getHashColorFromString, getHsla } from '../utils/color';
 
 const props = withDefaults(

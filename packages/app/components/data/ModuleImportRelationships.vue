@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import type { HierarchyNode } from 'd3-hierarchy';
 import type {
   ModuleImport,
   ModuleInfo,
   ModuleListItem,
   SessionContext,
 } from '@rolldown-analyzer/core/types';
-import type { ModuleGraphLink, ModuleGraphNode } from '../../composables/module-graph';
+import type { HierarchyNode } from 'd3-hierarchy';
 import { computed, onMounted, shallowRef, useTemplateRef, watch } from 'vue';
+
+import type { ModuleGraphLink, ModuleGraphNode } from '../../composables/module-graph';
 import { generateModuleGraphLink, getModuleGraphLinkColor } from '../../composables/module-graph';
 
 const props = defineProps<{

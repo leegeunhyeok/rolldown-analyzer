@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import type { TreeNodeInput } from 'nanovis';
-import type { PluginBuildInfo, SessionContext } from '@rolldown-analyzer/core/types';
-import type { PluginChartInfo, PluginChartNode } from '../../types/chart';
 import { useRoute } from '#app/composables/router';
+import type { PluginBuildInfo, SessionContext } from '@rolldown-analyzer/core/types';
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';
 import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDuration.vue';
 import DisplayNumberBadge from '@rolldown-analyzer/core/ui/components/DisplayNumberBadge.vue';
 import { formatDuration } from '@rolldown-analyzer/core/ui/utils/format';
 import { useMouse } from '@vueuse/core';
+import type { TreeNodeInput } from 'nanovis';
 import { normalizeTreeNode, Sunburst } from 'nanovis';
 import { computed, reactive, watch } from 'vue';
+
 import { settings } from '../../../app/state/settings';
 import { useChartGraph } from '../../composables/chart';
 import { useData } from '../../composables/data';
+import type { PluginChartInfo, PluginChartNode } from '../../types/chart';
 import { parseReadablePath } from '../../utils/filepath';
 import { normalizeTimestamp } from '../../utils/format';
 import { getFileTypeFromModuleId, ModuleTypeRules } from '../../utils/icon';

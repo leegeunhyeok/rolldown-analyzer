@@ -9,6 +9,7 @@ import type {
 } from '@rolldown-analyzer/core/types';
 import { Menu as VMenu } from 'floating-vue';
 import { computed, toRefs } from 'vue';
+
 import { settingsRefs } from '../../state/settings';
 
 const props = defineProps<{

@@ -5,6 +5,7 @@ import type {
   RolldownPluginBuildMetrics,
 } from '@rolldown-analyzer/core/types/data';
 import { computed } from 'vue';
+
 import { settings } from '../../state/settings';
 
 const props = defineProps<{

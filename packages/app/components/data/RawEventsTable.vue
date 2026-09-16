@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { RolldownEvent } from '@rolldown-analyzer/core/types/data';
 import type { SessionContext } from '@rolldown-analyzer/core/types';
+import type { RolldownEvent } from '@rolldown-analyzer/core/types/data';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import DisplayTimestamp from '@rolldown-analyzer/core/ui/components/DisplayTimestamp.vue';
 import { Dropdown as VDropdown } from 'floating-vue';

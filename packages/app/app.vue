@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import type { SessionContext } from '@rolldown-analyzer/core/types';
 import { useHead } from '#app/composables/head';
 import { useRoute, useRouter } from '#app/composables/router';
+import type { SessionContext } from '@rolldown-analyzer/core/types';
 import { onKeyDown } from '@vueuse/core';
 import { computed } from 'vue';
+
 import { useData } from './/composables/data';
 import { useSideNav } from './/state/nav';
 
 import 'floating-vue/dist/style.css';
+
 import './styles/cm.css';
 import './styles/splitpanes.css';
 import './styles/global.css';

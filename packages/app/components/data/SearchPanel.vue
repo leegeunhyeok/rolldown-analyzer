@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { FilterMatchRule } from '../../utils/icon';
 import { useVModel } from '@vueuse/core';
+
+import type { FilterMatchRule } from '../../utils/icon';
 
 interface ModelValue {
   search?: string | false;

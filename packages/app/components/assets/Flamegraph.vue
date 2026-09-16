@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { GraphBase, GraphBaseOptions } from 'nanovis';
-import type { AssetChartInfo } from '../../types/chart';
 import { useTemplateRef, watchEffect } from 'vue';
+
+import type { AssetChartInfo } from '../../types/chart';
 
 const props = defineProps<{
   graph: GraphBase<AssetChartInfo | undefined, GraphBaseOptions<AssetChartInfo | undefined>>;

@@ -4,6 +4,7 @@ import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue
 import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDuration.vue';
 import DisplayNumberBadge from '@rolldown-analyzer/core/ui/components/DisplayNumberBadge.vue';
 import { computed } from 'vue';
+
 import { sideNavItems } from '../../app/state/nav';
 
 const props = defineProps<{
@@ -97,7 +98,10 @@ const dataTable = computed<DataTableItem[]>(() => {
 
     <div op50 mt-4>Build Entries</div>
     <div border="~ base rounded" p4 grid="~ cols-[max-content_1fr] gap-2 items-center">
-      <template v-for="input of props.session.meta.inputs" :key="input">
+      <template
+        v-for="input of props.session.meta.inputs"
+        :key="`${input.name ?? ''}:${input.filename}`"
+      >
         <DisplayBadge :text="input.name || ''" />
         <DisplayModuleId :id="input.filename || ''" :session="session" :link="true" />
       </template>

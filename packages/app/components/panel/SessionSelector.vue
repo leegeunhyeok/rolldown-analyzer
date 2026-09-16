@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { BuildInfo } from '@rolldown-analyzer/core/types/data';
 import { NuxtLink } from '#components';
+import type { BuildInfo } from '@rolldown-analyzer/core/types/data';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import DisplayTimestamp from '@rolldown-analyzer/core/ui/components/DisplayTimestamp.vue';
 import { computed } from 'vue';
+
 import { parseReadablePath } from '../../utils/filepath';
 
 const props = defineProps<{

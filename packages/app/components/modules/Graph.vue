@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { ModuleImport, ModuleListItem, SessionContext } from '@rolldown-analyzer/core/types';
-import type { ModuleGraphLink, ModuleGraphNode } from '../../composables/module-graph';
 import { computed, nextTick, unref } from 'vue';
+
+import type { ModuleGraphLink, ModuleGraphNode } from '../../composables/module-graph';
 import { createModuleGraph } from '../../composables/module-graph';
 
 const props = defineProps<{

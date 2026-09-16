@@ -1,8 +1,9 @@
 <script setup lang="ts" generic="T extends { id: string; imports: Record<string, unknown>[] }">
 import type { SessionContext } from '@rolldown-analyzer/core/types';
-import type { GraphPathSelector } from '../../composables/graph-path-selector';
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';
 import { computed, watch } from 'vue';
+
+import type { GraphPathSelector } from '../../composables/graph-path-selector';
 import { useGraphPathSelector } from '../../composables/graph-path-selector';
 
 const props = defineProps<{

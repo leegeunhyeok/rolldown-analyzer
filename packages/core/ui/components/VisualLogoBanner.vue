@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import { isDark } from '../composables/dark';
 
 const theme = computed(() => (isDark.value ? 'white' : 'black'));

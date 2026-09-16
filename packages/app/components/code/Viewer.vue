@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type CodeMirror from 'codemirror';
 import { onMounted, toRefs, useTemplateRef, watchEffect } from 'vue';
+
 import { useCodeMirror } from '../../composables/codemirror';
 import { settings } from '../../state/settings';
 

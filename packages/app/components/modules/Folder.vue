@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ModuleDest, ModuleListItem, SessionContext } from '@rolldown-analyzer/core/types';
 import { computed } from 'vue';
+
 import { isVirtualModuleId, parseReadablePath } from '../../utils/filepath';
 import { toTree } from '../../utils/format';
 

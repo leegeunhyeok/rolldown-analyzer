@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { RolldownChunkImport, RolldownChunkInfo } from '@rolldown-analyzer/core/types/data';
 import { useRoute } from '#app/composables/router';
 import { NuxtLink } from '#components';
+import type { RolldownChunkImport, RolldownChunkInfo } from '@rolldown-analyzer/core/types/data';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import { computed } from 'vue';
 

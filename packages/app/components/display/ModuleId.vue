@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { ModuleImport } from '@rolldown/debug';
-import type { SessionContext } from '@rolldown-analyzer/core/types';
 import { useRoute } from '#app/composables/router';
 import { NuxtLink } from '#components';
+import type { SessionContext } from '@rolldown-analyzer/core/types';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
+import type { ModuleImport } from '@rolldown/debug';
 import { Tooltip } from 'floating-vue';
 import { computed } from 'vue';
+
 import { parseReadablePath } from '../../utils/filepath';
 
 const props = withDefaults(

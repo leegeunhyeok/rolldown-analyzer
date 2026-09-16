@@ -3,16 +3,17 @@ import type {
   RolldownPluginBuildMetrics,
   SessionContext,
 } from '@rolldown-analyzer/core/types/data';
-import type { FilterMatchRule } from '../../utils/icon';
 import DataVirtualList from '@rolldown-analyzer/core/ui/components/DataVirtualList.vue';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDuration.vue';
 import { useCycleList } from '@vueuse/core';
 import { Menu as VMenu } from 'floating-vue';
 import { computed, ref } from 'vue';
+
 import { settings } from '../../../app/state/settings';
 import { parseReadablePath } from '../../utils/filepath';
 import { normalizeTimestamp } from '../../utils/format';
+import type { FilterMatchRule } from '../../utils/icon';
 import { getFileTypeFromModuleId, ModuleTypeRules } from '../../utils/icon';
 
 const props = defineProps<{

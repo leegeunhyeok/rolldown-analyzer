@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ClientSettings } from '../../../app/state/settings';
 import type {
   RolldownPluginBuildMetrics,
   SessionContext,
@@ -8,6 +7,8 @@ import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDurati
 import DisplayNumberBadge from '@rolldown-analyzer/core/ui/components/DisplayNumberBadge.vue';
 import { useCycleList, useToggle } from '@vueuse/core';
 import { computed, ref, watch } from 'vue';
+
+import type { ClientSettings } from '../../../app/state/settings';
 import { settings } from '../../../app/state/settings';
 
 const props = defineProps<{

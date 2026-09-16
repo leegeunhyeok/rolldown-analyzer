@@ -2,6 +2,7 @@
 import type { RolldownModuleFlowNode, SessionContext } from '@rolldown-analyzer/core/types';
 import DisplayDuration from '@rolldown-analyzer/core/ui/components/DisplayDuration.vue';
 import { computed } from 'vue';
+
 import { isFlowmapSwapping } from '../../state/flowmap';
 
 const props = defineProps<{

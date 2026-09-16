@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { GraphBase, GraphBaseOptions } from 'nanovis';
-import type { AnalyzeChartInfo, AnalyzeChartNode } from '../../types/chart';
 import { colorToCssBackground } from 'nanovis';
 import { useTemplateRef, watchEffect } from 'vue';
+
+import type { AnalyzeChartInfo, AnalyzeChartNode } from '../../types/chart';
 
 const props = defineProps<{
   graph: GraphBase<AnalyzeChartInfo | undefined, GraphBaseOptions<AnalyzeChartInfo | undefined>>;

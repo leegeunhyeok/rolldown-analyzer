@@ -7,6 +7,7 @@ import type {
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';
 import DisplayIconButton from '@rolldown-analyzer/core/ui/components/DisplayIconButton.vue';
 import { computed } from 'vue';
+
 import { settings } from '../../../app/state/settings';
 import PluginName from '../display/PluginName.vue';
 

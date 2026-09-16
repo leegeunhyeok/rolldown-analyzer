@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import type { RolldownAssetInfo, SessionContext } from '@rolldown-analyzer/core/types';
-import type { ClientSettings } from '../state/settings';
-import type { AssetChartInfo, AssetChartNode } from '../types/chart';
 import { useRoute, useRouter } from '#app/composables/router';
+import type { RolldownAssetInfo, SessionContext } from '@rolldown-analyzer/core/types';
 import { computedWithControl, useMouse } from '@vueuse/core';
 import Fuse from 'fuse.js';
 import { Flamegraph, Sunburst, Treemap } from 'nanovis';
 import { computed, reactive, ref, watch } from 'vue';
+
 import ChartTreemap from '../components/chart/Treemap.vue';
 import { useChartGraph } from '../composables/chart';
 import { useData } from '../composables/data';
+import type { ClientSettings } from '../state/settings';
 import { settings } from '../state/settings';
+import type { AssetChartInfo, AssetChartNode } from '../types/chart';
 
 const props = defineProps<{
   session: SessionContext;

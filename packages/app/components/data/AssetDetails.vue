@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { useRoute } from '#app/composables/router';
 import type {
   RolldownAssetInfo,
   RolldownChunkInfo,
   SessionContext,
 } from '@rolldown-analyzer/core/types';
-import { useRoute } from '#app/composables/router';
 import DisplayBadge from '@rolldown-analyzer/core/ui/components/DisplayBadge.vue';
 import DisplayCloseButton from '@rolldown-analyzer/core/ui/components/DisplayCloseButton.vue';
 import DisplayIconButton from '@rolldown-analyzer/core/ui/components/DisplayIconButton.vue';
 import { computed, ref } from 'vue';
+
 import { settings } from '../../../app/state/settings';
 
 const props = withDefaults(

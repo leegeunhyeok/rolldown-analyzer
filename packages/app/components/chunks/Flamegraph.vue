@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { GraphBase, GraphBaseOptions } from 'nanovis';
-import type { ChunkChartInfo } from '../../types/chart';
 import { useTemplateRef, watchEffect } from 'vue';
+
+import type { ChunkChartInfo } from '../../types/chart';
 
 const props = defineProps<{
   graph: GraphBase<ChunkChartInfo | undefined, GraphBaseOptions<ChunkChartInfo | undefined>>;

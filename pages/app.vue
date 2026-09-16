@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useHead } from '#app/composables/head';
-
 import 'floating-vue/dist/style.css';
+
 import '../packages/app/styles/global.css';
 import '@rolldown-analyzer/core/ui/composables/dark';
 
